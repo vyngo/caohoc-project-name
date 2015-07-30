@@ -4,6 +4,8 @@
  */
 package main;
 
+import entity.NTimeSeries;
+
 /**
  *
  * @author Khanh Vy
@@ -15,5 +17,6 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        String fileData = "data.txt";
     }
 }

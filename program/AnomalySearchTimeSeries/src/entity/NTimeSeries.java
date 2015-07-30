@@ -4,8 +4,11 @@
  */
 package entity;
 
+import chart.JChart;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  *
@@ -14,32 +17,34 @@ import java.util.List;
 public class NTimeSeries {
 
     private List<Double> data = null;
-    private List<NSubsequence> anomalyPatterns = null;
-    
 
     public NTimeSeries() {
         data = new ArrayList<Double>();
-        anomalyPatterns = new ArrayList<NSubsequence>();
     }
-    
-    public void clear(){
-        if(data != null){
+
+    public void clear() {
+        if (data != null) {
             data.clear();
             data = null;
         }
-        if(anomalyPatterns != null){
-            anomalyPatterns.clear();
-            anomalyPatterns = null;
+    }
+
+    public void reInitiate() {
+        clear();
+        data = new ArrayList<Double>();
+    }
+
+    public int getNumberOfDataPoint() {
+        return data.size();
+    }
+    
+    public void addData(double val){
+        if(data != null){
+            data.add(val);
         }
     }
     
-    public void reInitiate(){
-        clear();
-        data = new ArrayList<Double>();
-        anomalyPatterns = new ArrayList<NSubsequence>();
+    public void drawChart(){
+        JChart.drawTimeSeries(data);
     }
-    
-    public int getNumberOfDataPoint(){
-        return data.size();
-    } 
 }
