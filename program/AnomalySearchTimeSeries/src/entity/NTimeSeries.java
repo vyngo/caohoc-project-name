@@ -5,10 +5,8 @@
 package entity;
 
 import chart.JChart;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  *
@@ -37,14 +35,18 @@ public class NTimeSeries {
     public int getNumberOfDataPoint() {
         return data.size();
     }
-    
-    public void addData(double val){
-        if(data != null){
+
+    public void addData(double val) {
+        if (data != null) {
             data.add(val);
         }
     }
-    
-    public void drawChart(){
+
+    public List<Double> getData() {
+        return data;
+    }
+
+    public void drawChart() {
         JChart.drawTimeSeries(data);
     }
 }

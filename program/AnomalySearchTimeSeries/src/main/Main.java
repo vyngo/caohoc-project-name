@@ -4,6 +4,7 @@
  */
 package main;
 
+import algorithms.VarLength;
 import entity.NTimeSeries;
 
 /**
