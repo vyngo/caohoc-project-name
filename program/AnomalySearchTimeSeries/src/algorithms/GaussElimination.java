@@ -69,25 +69,27 @@ public class GaussElimination {
         return x;
     }
     
-    public static void main(String[] args) {
-        double[][] A = new double[3][4];
-        A[0][0] = 7.0;
-        A[0][1] = 19.0;
-        A[0][2] = 65.0;
-        A[0][3] = 61.70;
-        
-        A[1][0] = 19.0;
-        A[1][1] = 65.0;
-        A[1][2] = 253.0;
-        A[1][3] = 211.04;
-        
-        A[2][0] = 65.0;
-        A[2][1] = 253.0;
-        A[2][2] = 1061.0;
-        A[2][3] = 835.78;
-        
-        print(A);
-        double[] x = gauss(A);
-        System.out.println("Res: " + x);
-    }
+//    public static void main(String[] args) {
+//        double[][] A = new double[3][4];
+//        A[0][0] = 7.0;
+//        A[0][1] = 19.0;
+//        A[0][2] = 65.0;
+//        A[0][3] = 61.70;
+//        
+//        A[1][0] = 19.0;
+//        A[1][1] = 65.0;
+//        A[1][2] = 253.0;
+//        A[1][3] = 211.04;
+//        
+//        A[2][0] = 65.0;
+//        A[2][1] = 253.0;
+//        A[2][2] = 1061.0;
+//        A[2][3] = 835.78;
+//        
+//        print(A);
+//        double[] x = gauss(A);
+//        for(int i = 0; i < x.length; i++){
+//            System.out.println("Res: " + x[i]);
+//        }
+//    }
 }
