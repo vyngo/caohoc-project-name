@@ -42,17 +42,29 @@ public class VarLength {
         int start = 0;
         do{
             NSubsequence sequence = getASegment(start);
-            start = sequence.getEnd();
-            if(start == (series.getNumberOfDataPoint() - 1)){
+            ret.add(sequence);
+            int end = sequence.getEnd();
+            if(end == (series.getNumberOfDataPoint() - 1)){
                 halt = true;
+            }else{
+                start = getNextStartIndex(sequence);
             }
         }while(!halt);
         return ret;
     }
     
-//    private int getNextStartIndex(NSubsequence se){
-//       
-//    }
+    private int getNextStartIndex(NSubsequence se){
+       int start = se.getStart();
+       int end = se.getEnd();
+       int i = 1;
+       List<Double> imageSubSequence = series.getData().subList(start, end+1);
+       List<Double> candidateSequence = series.getData().subList(start + i, end + i + 1);
+       while(DistanceCal.distance(Utils.listToArray(imageSubSequence), Utils.listToArray(candidateSequence)) <= e2
+               && i < (end - start)){
+           i++;
+       }
+       return end + i;
+    }
 
     private NSubsequence getASegment(int start) {
         NSubsequence ret = null;
@@ -61,6 +73,10 @@ public class VarLength {
         int s = start;
         do {
             int e = s + l - 1;
+            if(e >= series.getNumberOfDataPoint() - 1){
+                ret = new NSubsequence(start, series.getNumberOfDataPoint() - 1);
+                break;
+            }
             List<Double> subList = series.getData().subList(s, e + 1);
             double[] y = Utils.listToArray(subList);
             double[] x = new double[l];
@@ -68,7 +84,7 @@ public class VarLength {
                 x[i] = s + i;
             }
             double[] reg = QuadraticRegression.regress(x, y);
-            if (reg[4] >= e1) {
+            if (reg[3] >= e1) {
                 halt = true;
                 ret = new NSubsequence(start, e-1);
             } else {
@@ -104,5 +120,15 @@ public class VarLength {
                 scanner.close();
             }
         }
+    }
+    
+    public static void main(String[] args) {
+         String fileData = "data.txt";
+         VarLength v = new VarLength();
+         v.initData(fileData);
+         List<NSubsequence> ret = v.segmentation();
+         for(NSubsequence s : ret){
+             System.out.println(s.getStart() + " - " + s.getEnd());
+         }
     }
 }

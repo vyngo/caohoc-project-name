@@ -5,17 +5,26 @@
 package algorithms;
 
 import common.Utils;
-import entity.NTimeSeries;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  *
  * @author Khanh Vy
  */
 public class DistanceCal {
+
+    public static double distance(double[] a, double[] b) {
+        if (a.length == b.length) {
+            return euclid(a, b);
+        } else if (a.length > b.length) {
+            double[] tmp = homothetic(a, b.length);
+            return euclid(b, tmp);
+        }else {
+            double[] tmp = homothetic(b, a.length);
+            return euclid(a, tmp);
+        }
+    }
 
     private static double euclid(double[] a, double[] b) {
         assert (a.length == b.length);
@@ -43,43 +52,25 @@ public class DistanceCal {
             newIndex[i] = x;
         }
         List<Double> candidate = new ArrayList<Double>();
-        int pivot = 0;
-        for (int i = 0; i < data.length; i++) {
-            if (i == 0) {
-                candidate.add(newData[i]);
-            } else if (Math.abs(newIndex[i] - newIndex[pivot]) >= ratio) {
-                candidate.add(newData[i]);
-                pivot = i;
-            }
+        int centerIndex = (newData.length / 2);
+
+        int num = 0;
+        for (int i = centerIndex; i >= 0 && num < length / 2; i -= Double.valueOf(1 / ratio).intValue()) {
+            candidate.add(0, newData[i]);
+            num++;
         }
+        num = 0;
+        for (int i = centerIndex + Double.valueOf(1 / ratio).intValue(); i < newData.length && num < length / 2; i += Double.valueOf(1 / ratio).intValue()) {
+            candidate.add(newData[i]);
+            num++;
+        }
+
         int cl = candidate.size();
-        for (int i = 0; i < length; i++) {
-            if (i < cl) {
-                ret[i] = candidate.get(i);
-            }else{
-                ret[i] = newData[pivot]; // never
-            }
+        for (int i = 0; i < cl; i++) {
+            ret[i] = candidate.get(i);
         }
         return ret;
     }
-//    private static double[] homothetic(double[] data, int length) { // length must be smaller than or equal to data.length
-//        double[] ret = new double[length];
-//        double y_max = Utils.max(data);
-//        double y_min = Utils.min(data);
-//        double x_center = (double) (data.length / 2);
-//        double y_center = (y_max + y_min) / 2.0;
-//        double ratio = (length * 1.0) / (data.length * 1.0);
-//        double[] newData = new double[data.length];
-//        for(int i = 0; i < data.length; i++){
-//            double y = ratio * (data[i] - y_center) + y_center;
-//            newData[i] = y;
-//        }
-//        int begin = (data.length - length) / 2;
-//        for(int i = begin; i < begin + length; i++){
-//            ret[i-begin] = newData[i]; 
-//        }
-//        return ret;
-//    }
 //    public static void main(String[] args) {
 //        Scanner scanner = null;
 //        try {
@@ -87,23 +78,17 @@ public class DistanceCal {
 //            File file = new File("data.txt");
 //            scanner = new Scanner(file);
 //            int i = 0;
-//            NTimeSeries series = new NTimeSeries();
+//            List<Double> series = new ArrayList<Double>();
 //            while (scanner.hasNextLine()) {
 //                i++;
 //                String line = scanner.nextLine();
-//                if (i == 1) {
-//                    double e1 = Double.parseDouble(line);
-//                } else if (i == 2) {
-//                    double e2 = Double.parseDouble(line);
-//                } else {
-//                    series.addData(Double.parseDouble(line));
-//                }
+//                series.add(Double.parseDouble(line));
 //            }
-//            double[] d = new double[series.getData().size()];
-//            for(int j = 0; j < series.getData().size(); j++){
-//                d[j] = series.getData().get(j);
+//            double[] d = new double[series.size()];
+//            for(int j = 0; j < series.size(); j++){
+//                d[j] = series.get(j);
 //            }
-//            double[] s = homothetic(d, 30);
+//            double[] s = homothetic(d, 50);
 //            for(double a : s){
 //                System.out.println(a);
 //            }
