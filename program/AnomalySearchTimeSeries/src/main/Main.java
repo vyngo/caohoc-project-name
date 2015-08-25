@@ -19,5 +19,8 @@ public class Main {
     public static void main(String[] args) {
         // TODO code application logic here
         String fileData = "data.txt";
+        VarLength v = new VarLength();
+        v.initData(fileData);
+        v.run();
     }
 }

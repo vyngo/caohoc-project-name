@@ -29,8 +29,13 @@ public class DistanceCal {
     private static double euclid(double[] a, double[] b) {
         assert (a.length == b.length);
         double ret = 0.0;
+        double beta = 0.0;
+        for(int i = 0; i < a.length; i++){
+            beta += (b[i] - a[i]);
+        }
+        beta = beta / a.length;
         for (int i = 0; i < a.length; i++) {
-            double tmp = (a[i] - b[i]) * (a[i] - b[i]);
+            double tmp = (a[i] - b[i] - beta) * (a[i] - b[i] - beta);
             ret += tmp;
         }
         return Math.sqrt(ret);

@@ -70,42 +70,42 @@ public class LinearRegression {
         return x.length;
     }
     
-    public static void main(String[] args) {
-        double[] x = new double[10];
-        double[] y = new double[10];
-        x[0] = 1;
-        y[0] = 1;
-        
-        x[1] = 1;
-        y[1] = 2;
-        
-        x[2] = 2;
-        y[2] = 2;
-        
-        x[3] = 2;
-        y[3] = 3;
-        
-        x[4] = 2;
-        y[4] = 4;
-        
-        x[5] = 3;
-        y[5] = 4;
-        
-        x[6] = 3;
-        y[6] = 5;
-        
-        x[7] = 4;
-        y[7] = 5;
-        
-        x[8] = 5;
-        y[8] = 6;
-        
-        x[9] = 6;
-        y[9] = 7;
-        
-        double[] ret = regress(x, y);
-        for(int i = 0; i < ret.length; i++){
-            System.out.println(ret[i]);
-        }
-    }
+//    public static void main(String[] args) {
+//        double[] x = new double[10];
+//        double[] y = new double[10];
+//        x[0] = 1;
+//        y[0] = 1;
+//        
+//        x[1] = 1;
+//        y[1] = 2;
+//        
+//        x[2] = 2;
+//        y[2] = 2;
+//        
+//        x[3] = 2;
+//        y[3] = 3;
+//        
+//        x[4] = 2;
+//        y[4] = 4;
+//        
+//        x[5] = 3;
+//        y[5] = 4;
+//        
+//        x[6] = 3;
+//        y[6] = 5;
+//        
+//        x[7] = 4;
+//        y[7] = 5;
+//        
+//        x[8] = 5;
+//        y[8] = 6;
+//        
+//        x[9] = 6;
+//        y[9] = 7;
+//        
+//        double[] ret = regress(x, y);
+//        for(int i = 0; i < ret.length; i++){
+//            System.out.println(ret[i]);
+//        }
+//    }
 }
