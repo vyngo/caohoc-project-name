@@ -4,6 +4,7 @@
  */
 package algorithms;
 
+import chart.JChart;
 import common.Utils;
 import entity.NSubsequence;
 import entity.NTimeSeries;
@@ -44,6 +45,7 @@ public class VarLength {
         for(NSubsequence n : anomalyPatterns){
             System.out.println(n.getStart() +" - " + n.getEnd());
         }
+        JChart.drawChart(series, anomalyPatterns);
     }
 
     private List<NSubsequence> segmentation() {

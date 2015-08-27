@@ -39,6 +39,8 @@
  */
 package chart;
 
+import entity.NSubsequence;
+import entity.NTimeSeries;
 import java.awt.Color;
 import java.awt.Paint;
 import java.text.SimpleDateFormat;
@@ -48,7 +50,6 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.general.SeriesException;
 import org.jfree.data.xy.XYDataset;
@@ -70,10 +71,11 @@ public class JChart extends ApplicationFrame {
      *
      * @param title the frame title.
      */
-    public JChart(final String title, List<Double> data) {
+    public JChart(final String title, NTimeSeries series, List<NSubsequence> anomalies) {
+
         super(title);
-        final XYDataset dataset = createDataset(data);
-        final JFreeChart chart = createChart(dataset);
+        final XYDataset dataset = createDataset(series);
+        final JFreeChart chart = createChart(dataset, anomalies);
         final ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
         chartPanel.setMouseZoomable(true, false);
@@ -86,15 +88,15 @@ public class JChart extends ApplicationFrame {
      *
      * @return A sample dataset.
      */
-    private XYDataset createDataset(List<Double> data) {
-
-        final XYSeries series = new XYSeries("Data");
-        int length = data.size();
-        for (int i = 0; i < length; i++) {
+    private XYDataset createDataset(NTimeSeries data) {
+        final XYSeries series = new XYSeries("");
+        List<Double> lst = data.getData();
+        int size = lst.size();
+        for (int i = 0; i < size; i++) {
             try {
-                series.add(i, data.get(i));
+                series.add(i, lst.get(i));
             } catch (SeriesException e) {
-                e.printStackTrace(System.out);
+                System.err.println("Error adding to series");
             }
         }
         return new XYSeriesCollection(series);
@@ -107,7 +109,7 @@ public class JChart extends ApplicationFrame {
      *
      * @return A sample chart.
      */
-    private JFreeChart createChart(final XYDataset dataset) {
+    private JFreeChart createChart(final XYDataset dataset, List<NSubsequence> anomalies) {
         final JFreeChart chart = ChartFactory.createTimeSeriesChart(
                 "Test",
                 "Time",
@@ -117,19 +119,25 @@ public class JChart extends ApplicationFrame {
                 false,
                 false);
         chart.setBackgroundPaint(Color.WHITE);
+
+//        final StandardLegend sl = (StandardLegend) chart.getLegend();
+//        sl.setDisplaySeriesShapes(true);
+
         final XYPlot plot = chart.getXYPlot();
         plot.setBackgroundPaint(Color.white);
         plot.setDomainGridlinePaint(Color.white);
+//        plot.setRangeGridlinePaint(Color.white);
+//        plot.setAxisOffset(new Spacer(Spacer.ABSOLUTE, 5.0, 5.0, 5.0, 5.0));
         plot.setDomainCrosshairVisible(true);
         plot.setRangeCrosshairVisible(true);
-//        MyRender renderer = new MyRender(dataset);
-//        plot.setRenderer(renderer);
-        XYLineAndShapeRenderer render = new XYLineAndShapeRenderer();
-        render.setSeriesShapesVisible(0, false);
+
+//		final XYItemRenderer renderer = plot.getRenderer();
+        MyRender renderer = new MyRender(dataset, anomalies);
+        plot.setRenderer(renderer);
+        renderer.setSeriesShapesVisible(0, false);
         chart.setBackgroundPaint(Color.white);
         DateAxis axis = (DateAxis) plot.getDomainAxis();
-//        axis.setDateFormatOverride(new SimpleDateFormat("SSS"));
-        axis.setVisible(false);
+        axis.setDateFormatOverride(new SimpleDateFormat("S"));
 
 
         return chart;
@@ -138,9 +146,11 @@ public class JChart extends ApplicationFrame {
     private static class MyRender extends XYLineAndShapeRenderer {
 
         XYDataset dataset;
+        List<NSubsequence> anomalies;
 
-        public MyRender(XYDataset dataset) {
+        public MyRender(XYDataset dataset, List<NSubsequence> anomalies) {
             this.dataset = dataset;
+            this.anomalies = anomalies;
         }
 
         @Override
@@ -153,23 +163,21 @@ public class JChart extends ApplicationFrame {
         }
 
         public Color getItemColor(int row, int col) {
-            System.out.println(col + "," + dataset.getY(row, col));
             double x = dataset.getXValue(row, col);
-            if (x <= 100) {
-                return Color.black;
-            } else {
-                return Color.red;
+            for (NSubsequence anoma : this.anomalies) {
+                if (x >= anoma.getStart() && x <= anoma.getEnd()) {
+                    return Color.red;
+                }
             }
+            return Color.black;
         }
     }
 
-    public static void drawTimeSeries(List<Double> data) {
-
+    public static void drawChart(NTimeSeries series, List<NSubsequence> anomalies) {
         final String title = "Time Series";
-        final JChart demo = new JChart(title, data);
+        final JChart demo = new JChart(title, series, anomalies);
         demo.pack();
         RefineryUtilities.positionFrameRandomly(demo);
         demo.setVisible(true);
-
     }
 }

@@ -46,7 +46,4 @@ public class NTimeSeries {
         return data;
     }
 
-    public void drawChart() {
-        JChart.drawTimeSeries(data);
-    }
 }
