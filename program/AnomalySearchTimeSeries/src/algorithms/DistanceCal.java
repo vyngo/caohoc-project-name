@@ -20,7 +20,7 @@ public class DistanceCal {
         } else if (a.length > b.length) {
             double[] tmp = homothetic(a, b.length);
             return euclid(b, tmp);
-        }else {
+        } else {
             double[] tmp = homothetic(b, a.length);
             return euclid(a, tmp);
         }
@@ -40,6 +40,15 @@ public class DistanceCal {
         }
         return Math.sqrt(ret);
     }
+//    private static double euclid(double[] a, double[] b) {
+//        assert (a.length == b.length);
+//        double ret = 0.0;
+//        for (int i = 0; i < a.length; i++) {
+//            double tmp = (a[i] - b[i]) * (a[i] - b[i]);
+//            ret += tmp;
+//        }
+//        return Math.sqrt(ret);
+//    }
 
     private static double[] homothetic(double[] data, int length) { // length must be smaller than or equal to data.length
         double[] ret = new double[length];

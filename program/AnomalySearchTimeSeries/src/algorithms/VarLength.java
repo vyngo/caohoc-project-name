@@ -41,7 +41,7 @@ public class VarLength {
     
     public void run(){
         List<NSubsequence> candiates = segmentation();
-        List<NSubsequence> anomalyPatterns = anomalyFind(candiates);
+        anomalyPatterns.addAll(anomalyFind(candiates));
         for(NSubsequence n : anomalyPatterns){
             System.out.println(n.getStart() +" - " + n.getEnd());
         }
