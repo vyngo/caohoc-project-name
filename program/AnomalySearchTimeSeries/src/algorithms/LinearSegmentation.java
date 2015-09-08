@@ -11,13 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * segmentation time series using M. Leng's method with linear regression
+ * segmentation time series using with linear regression
  *
  * @author Khanh Vy
  */
 public class LinearSegmentation {
 
-    public static List<NSubsequence> segmentation(NTimeSeries series, double e1, double e2) {
+    public static List<NSubsequence> segmentation(NTimeSeries series, double e1) {
         List<NSubsequence> ret = new ArrayList<NSubsequence>();
         boolean halt = false;
         int start = 0;
@@ -28,29 +28,21 @@ public class LinearSegmentation {
             if (end == (series.getNumberOfDataPoint() - 1)) {
                 halt = true;
             } else {
-                start = getNextStartIndex(sequence, series, e2);
+                start = getNextStartIndex(sequence, series);
             }
         } while (!halt);
         return ret;
     }
 
-    private static int getNextStartIndex(NSubsequence se, NTimeSeries series, double e2) {
-        int start = se.getStart();
+    private static int getNextStartIndex(NSubsequence se, NTimeSeries series) {
         int end = se.getEnd();
-        int i = 1;
-        List<Double> imageSubSequence = series.getData().subList(start, end + 1);
-        List<Double> candidateSequence = series.getData().subList(start + i, end + i + 1);
-        while (DistanceCal.distance(Utils.listToArray(imageSubSequence), Utils.listToArray(candidateSequence)) <= e2
-                && i < (end - start)) {
-            i++;
-        }
-        return end + i;
+        return end + 1;
     }
 
     private static NSubsequence getASegment(int start, NTimeSeries series, double e1) {
         NSubsequence ret = null;
         boolean halt = false;
-        int l = 4;// initial length
+        int l = 3;// initial length
         int s = start;
         do {
             int e = s + l - 1;
@@ -65,7 +57,7 @@ public class LinearSegmentation {
                 x[i] = s + i;
             }
             double[] reg = LinearRegression.regress(x, y);
-            if (reg[3] >= e1) {
+            if (reg[2] >= e1) {
                 halt = true;
                 ret = new NSubsequence(start, e - 1);
             } else {

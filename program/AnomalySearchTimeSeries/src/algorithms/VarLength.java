@@ -22,13 +22,36 @@ public class VarLength {
 
     private List<NSubsequence> anomalyPatterns = null;
     private NTimeSeries series = null;
-    double e1;
-    double e2;
-    private static double threshold = 3.0;
+    private double e1;
+    private double e2;
+    private int k;
+    private double threshold;
 
-    public VarLength() {
+    public VarLength(double e1, double e2) {
         series = new NTimeSeries();
         anomalyPatterns = new ArrayList<NSubsequence>();
+        this.e1 = e1;
+        this.e2 = e2;
+        this.k = 0;
+        this.threshold = 3.0;
+    }
+    
+    public VarLength(double e1, double e2, int k) {
+        series = new NTimeSeries();
+        anomalyPatterns = new ArrayList<NSubsequence>();
+        this.e1 = e1;
+        this.e2 = e2;
+        this.k = k;
+        this.threshold = 3.0;
+    }
+    
+    public VarLength(double e1, double e2, int k, double threshold) {
+        series = new NTimeSeries();
+        anomalyPatterns = new ArrayList<NSubsequence>();
+        this.e1 = e1;
+        this.e2 = e2;
+        this.k = k;
+        this.threshold = threshold;
     }
 
     public void initData(String pathFile) {
@@ -43,7 +66,7 @@ public class VarLength {
         List<NSubsequence> candiates = segmentation();
         anomalyPatterns.addAll(anomalyFind(candiates));
         for(NSubsequence n : anomalyPatterns){
-            System.out.println(n.getStart() +" - " + n.getEnd());
+           Utils.printSegment(n);
         }
         JChart.drawChart(series, anomalyPatterns);
     }
@@ -68,7 +91,9 @@ public class VarLength {
             }
             int size = candidates.size();
             double[][] distanceMatrix = distanceMatrixCal(candidates, lmin, lmax);
-            int k = Double.valueOf(Math.ceil(0.05 * size)).intValue();
+            if(k <= 0){
+                k = Double.valueOf(Math.ceil(0.05 * size)).intValue();
+            }
             List<Double> kDis = new ArrayList<Double>();
             for(int i = 0; i < size; i++){
                 double tmp = calKDistance(i, k, distanceMatrix);
@@ -174,7 +199,7 @@ public class VarLength {
         Scanner scanner = null;
         try {
             // Location of file to read
-            File file = new File("data.txt");
+            File file = new File(filePath);
             scanner = new Scanner(file);
             int i = 0;
             while (scanner.hasNextLine()) {
@@ -182,13 +207,7 @@ public class VarLength {
                 String draw = scanner.nextLine();
 //                String[] aline = draw.split(" ");
                 String line = draw.trim();
-                if (i == 1) {
-                    e1 = Double.parseDouble(line);
-                } else if (i == 2) {
-                    e2 = Double.parseDouble(line);
-                } else {
-                    series.addData(Double.parseDouble(line));
-                }
+                series.addData(Double.parseDouble(line));
             }
             scanner.close();
         } catch (Exception ex) {

@@ -43,12 +43,11 @@ import entity.NSubsequence;
 import entity.NTimeSeries;
 import java.awt.Color;
 import java.awt.Paint;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
@@ -66,18 +65,18 @@ import org.jfree.ui.RefineryUtilities;
  * so this needs to be worked on (4000 points is not that many!).
  *
  */
-public class JChart extends ApplicationFrame {
+public class JChartSegment extends ApplicationFrame {
 
     /**
      * Creates a new demo instance.
      *
      * @param title the frame title.
      */
-    private JChart(final String title, NTimeSeries series, List<NSubsequence> anomalies) {
+    private JChartSegment(final String title, NTimeSeries series, List<NSubsequence> subsequence) {
 
         super(title);
         final XYDataset dataset = createDataset(series);
-        final JFreeChart chart = createChart(dataset, anomalies);
+        final JFreeChart chart = createChart(dataset, subsequence);
         final ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
         chartPanel.setMouseZoomable(true, false);
@@ -111,46 +110,43 @@ public class JChart extends ApplicationFrame {
      *
      * @return A sample chart.
      */
-    private JFreeChart createChart(final XYDataset dataset, List<NSubsequence> anomalies) {
+    private JFreeChart createChart(final XYDataset dataset, List<NSubsequence> subsequence) {
         final JFreeChart chart = ChartFactory.createXYLineChart(
                 "Test",
                 "Time",
                 "Value",
-               dataset,PlotOrientation.VERTICAL, false, false, false);
+                dataset,PlotOrientation.VERTICAL, false, false, false);
         chart.setBackgroundPaint(Color.WHITE);
-
-//        final StandardLegend sl = (StandardLegend) chart.getLegend();
-//        sl.setDisplaySeriesShapes(true);
-
         final XYPlot plot = chart.getXYPlot();
         plot.setBackgroundPaint(Color.white);
         plot.setDomainGridlinePaint(Color.white);
-//        plot.setRangeGridlinePaint(Color.white);
-//        plot.setAxisOffset(new Spacer(Spacer.ABSOLUTE, 5.0, 5.0, 5.0, 5.0));
         plot.setDomainCrosshairVisible(true);
         plot.setRangeCrosshairVisible(true);
-
-//		final XYItemRenderer renderer = plot.getRenderer();
-        MyRender renderer = new MyRender(dataset, anomalies);
+        MyRender renderer = new MyRender(dataset, subsequence);
         plot.setRenderer(renderer);
         renderer.setSeriesShapesVisible(0, false);
         chart.setBackgroundPaint(Color.white);
-//        DateAxis axis = (DateAxis) plot.getDomainAxis();
-//        axis.setDateFormatOverride(new SimpleDateFormat("S"));
         NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
         yAxis.setAutoRangeIncludesZero(false);
-
         return chart;
     }
 
     private static class MyRender extends XYLineAndShapeRenderer {
 
         XYDataset dataset;
-        List<NSubsequence> anomalies;
+        List<NSubsequence> subsequences;
+        List<Color> colors;
+        int index;
 
-        public MyRender(XYDataset dataset, List<NSubsequence> anomalies) {
+        public MyRender(XYDataset dataset, List<NSubsequence> subsequences) {
             this.dataset = dataset;
-            this.anomalies = anomalies;
+            this.subsequences = subsequences;
+            colors = new ArrayList<Color>();
+            colors.add(Color.black);
+            colors.add(Color.red);
+            colors.add(Color.blue);
+            colors.add(Color.green);
+            index = 0;
         }
 
         @Override
@@ -164,18 +160,20 @@ public class JChart extends ApplicationFrame {
 
         public Color getItemColor(int row, int col) {
             double x = dataset.getXValue(row, col);
-            for (NSubsequence anoma : this.anomalies) {
+            int i = 0;
+            for (NSubsequence anoma : this.subsequences) {
                 if (x >= anoma.getStart() && x <= anoma.getEnd()) {
-                    return Color.red;
+                    return colors.get(i%4);
                 }
+                i++;
             }
             return Color.black;
         }
     }
 
-    public static void drawChart(NTimeSeries series, List<NSubsequence> anomalies) {
+    public static void drawChart(NTimeSeries series, List<NSubsequence> subsequences) {
         final String title = "Time Series";
-        final JChart demo = new JChart(title, series, anomalies);
+        final JChartSegment demo = new JChartSegment(title, series, subsequences);
         demo.pack();
         RefineryUtilities.positionFrameRandomly(demo);
         demo.setVisible(true);

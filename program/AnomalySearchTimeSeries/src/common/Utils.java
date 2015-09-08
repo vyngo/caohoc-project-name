@@ -4,8 +4,8 @@
  */
 package common;
 
+import entity.NSubsequence;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -60,5 +60,17 @@ public class Utils {
         }
         Collections.sort(ret);
         return ret;
+    }
+    
+    public static void print(String s){
+        System.out.print(s);
+    }
+    
+    public static void println(String s){
+        System.out.println(s);
+    }
+    
+    public static void printSegment(NSubsequence s){
+        println(s.getStart() + " - " + s.getEnd() + ", length: " + s.getLength());
     }
 }
