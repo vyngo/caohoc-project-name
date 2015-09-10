@@ -6,6 +6,7 @@ package main;
 
 import algorithms.BottomUpSegmentation;
 import chart.JChartSegment;
+import common.SegmentationErrorCal;
 import common.Utils;
 import entity.NSubsequence;
 import entity.NTimeSeries;
@@ -45,6 +46,8 @@ public class MainBottomUpSegmentation {
             for(NSubsequence s : subsequence){
                 Utils.printSegment(s);
             }
+            double err = SegmentationErrorCal.calErrorByPiecewsie(subsequence, series);
+            Utils.print("Error: " + err);
             JChartSegment.drawChart(series, subsequence);
             scanner.close();
         } catch (Exception ex) {

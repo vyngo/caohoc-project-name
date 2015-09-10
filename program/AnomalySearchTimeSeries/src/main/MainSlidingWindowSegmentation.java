@@ -5,7 +5,7 @@
 package main;
 
 import algorithms.BottomUpSegmentation;
-import algorithms.SWABSegmentation;
+import algorithms.LinearSegmentation;
 import chart.JChartSegment;
 import common.SegmentationErrorCal;
 import common.Utils;
@@ -19,7 +19,7 @@ import java.util.Scanner;
  *
  * @author Khanh Vy
  */
-public class MainSWABSegmentation {
+public class MainSlidingWindowSegmentation {
 
     /**
      * @param args the command line arguments
@@ -41,8 +41,7 @@ public class MainSWABSegmentation {
                 String line = draw.trim();
                 series.addData(Double.parseDouble(line));
             }
-            int w = series.getNumberOfDataPoint() * 20 / 100;
-            List<NSubsequence> subsequence = SWABSegmentation.segmentation(series, 3.0, w);
+            List<NSubsequence> subsequence = LinearSegmentation.segmentation(series, 3.0);
             Utils.println("================= RESULT ==============================");
             Utils.println("size: " + subsequence.size());
             for(NSubsequence s : subsequence){
