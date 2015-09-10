@@ -17,6 +17,7 @@ public class NSubsequence {
     }
 
     public NSubsequence(int start, int end) {
+        assert (start <= end);
         this.start = start;
         this.end = end;
     }

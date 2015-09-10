@@ -76,7 +76,7 @@ public class BottomUpSegmentation {
         double[] reg = LinearRegression.regress(x, y);
         return reg[2];
     }
-
+    
     private static MinMergCost min(List<Double> data) {
         double min = Double.MAX_VALUE;
         int index = 0;
