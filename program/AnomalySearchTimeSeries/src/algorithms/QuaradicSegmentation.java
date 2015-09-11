@@ -18,6 +18,7 @@ import java.util.List;
 public class QuaradicSegmentation {
 
     public static List<NSubsequence> segmentation(NTimeSeries series, double e1, double e2) {
+        Utils.println("SEGMENTATION...");
         List<NSubsequence> ret = new ArrayList<NSubsequence>();
         boolean halt = false;
         int start = 0;
@@ -31,6 +32,7 @@ public class QuaradicSegmentation {
                 start = getNextStartIndex(sequence, series, e2);
             }
         } while (!halt);
+        Utils.println("FINISH...");
         return ret;
     }
 

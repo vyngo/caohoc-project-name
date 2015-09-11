@@ -35,7 +35,7 @@ public class VarLength {
         this.k = 0;
         this.threshold = 3.0;
     }
-    
+
     public VarLength(double e1, double e2, int k) {
         series = new NTimeSeries();
         anomalyPatterns = new ArrayList<NSubsequence>();
@@ -44,7 +44,7 @@ public class VarLength {
         this.k = k;
         this.threshold = 3.0;
     }
-    
+
     public VarLength(double e1, double e2, int k, double threshold) {
         series = new NTimeSeries();
         anomalyPatterns = new ArrayList<NSubsequence>();
@@ -61,12 +61,13 @@ public class VarLength {
     public NTimeSeries getTimeSeries() {
         return series;
     }
-    
-    public void run(){
+
+    public void run() {
+        Utils.println("RUN...");
         List<NSubsequence> candiates = segmentation();
         anomalyPatterns.addAll(anomalyFind(candiates));
-        for(NSubsequence n : anomalyPatterns){
-           Utils.printSegment(n);
+        for (NSubsequence n : anomalyPatterns) {
+            Utils.printSegment(n);
         }
         JChart.drawChart(series, anomalyPatterns);
     }
@@ -76,6 +77,7 @@ public class VarLength {
     }
 
     private List<NSubsequence> anomalyFind(List<NSubsequence> candidates) {
+        Utils.println("ANOMALY FIND...");
         List<NSubsequence> ret = new ArrayList<NSubsequence>();
         if (candidates != null && !candidates.isEmpty()) {
             int lmax = Integer.MIN_VALUE;
@@ -91,68 +93,71 @@ public class VarLength {
             }
             int size = candidates.size();
             double[][] distanceMatrix = distanceMatrixCal(candidates, lmin, lmax);
-            if(k <= 0){
+            if (k <= 0) {
                 k = Double.valueOf(Math.ceil(0.05 * size)).intValue();
             }
             List<Double> kDis = new ArrayList<Double>();
-            for(int i = 0; i < size; i++){
+            for (int i = 0; i < size; i++) {
                 double tmp = calKDistance(i, k, distanceMatrix);
                 kDis.add(tmp);
             }
             double median = Utils.median(kDis);
             List<Double> anomalyFactors = calAnomalyFactor(kDis, median);
-            for(int i = 0; i < size; i++){
-                if(anomalyFactors.get(i) > threshold){
+            for (int i = 0; i < size; i++) {
+                if (anomalyFactors.get(i) > threshold) {
                     ret.add(candidates.get(i));
                 }
             }
         }
+        Utils.println("FINISH...");
         return mergeAnomalyPattern(ret);
     }
-    
-    private List<NSubsequence> mergeAnomalyPattern(List<NSubsequence> candidates){
+
+    private List<NSubsequence> mergeAnomalyPattern(List<NSubsequence> candidates) {
+        Utils.println("MERGRE RESULT...");
         int size = candidates.size();
         List<NSubsequence> ret = new ArrayList<NSubsequence>();
         List<Integer> banIndex = new ArrayList<Integer>();
-        for(int i = 0; i < size; i++){
-            if(banIndex.contains(i)){
+        for (int i = 0; i < size; i++) {
+            if (banIndex.contains(i)) {
                 continue;
             }
             NSubsequence n = new NSubsequence(candidates.get(i).getStart(), candidates.get(i).getEnd());
-            for(int j = i+1; j < size; j++){
-                if(!banIndex.contains(j)){
-                   NSubsequence tmp = candidates.get(j);
-                   if((tmp.getStart() >= n.getStart() && tmp.getStart() <= n.getEnd())
-                           || (tmp.getStart() == n.getEnd() + 1)){
-                       n.setEnd(tmp.getEnd());
-                       banIndex.add(j);
-                   }
+            for (int j = i + 1; j < size; j++) {
+                if (!banIndex.contains(j)) {
+                    NSubsequence tmp = candidates.get(j);
+                    if ((tmp.getStart() >= n.getStart() && tmp.getStart() <= n.getEnd())
+                            || (tmp.getStart() == n.getEnd() + 1)) {
+                        n.setEnd(tmp.getEnd());
+                        banIndex.add(j);
+                    }
                 }
             }
             ret.add(n);
         }
+        Utils.println("FINISH...");
         return ret;
     }
-    
-    private List<Double> calAnomalyFactor(List<Double> kDis, double median){
-       List<Double> ret = new ArrayList<Double>();
-       int size = kDis.size();
-       for(int i = 0; i < size; i++){
-           ret.add(kDis.get(i) / median);
-       }
-       return ret;
+
+    private List<Double> calAnomalyFactor(List<Double> kDis, double median) {
+        List<Double> ret = new ArrayList<Double>();
+        int size = kDis.size();
+        for (int i = 0; i < size; i++) {
+            ret.add(kDis.get(i) / median);
+        }
+        return ret;
     }
-    
-    private double calKDistance(int pattern, int k, double[][] matrix){
+
+    private double calKDistance(int pattern, int k, double[][] matrix) {
         int size = matrix.length;
         List<Double> tmp = new ArrayList<Double>();
-        for(int i = 0; i < size; i++){
-            if(pattern != i){
+        for (int i = 0; i < size; i++) {
+            if (pattern != i) {
                 tmp.add(matrix[pattern][i]);
             }
         }
         Collections.sort(tmp);
-        return tmp.get(k-1);
+        return tmp.get(k - 1);
     }
 
     private double[][] distanceMatrixCal(List<NSubsequence> candidates, int lmin, int lmax) {
@@ -160,7 +165,7 @@ public class VarLength {
         double[][] ret = new double[length][length];
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < length; j++) {
-                if(i == j){
+                if (i == j) {
                     ret[i][j] = 0.0;
                     continue;
                 }
@@ -184,7 +189,7 @@ public class VarLength {
                 if (cal < ret) {
                     ret = cal;
                 }
-            }else{
+            } else {
                 break;
             }
         }
@@ -196,6 +201,7 @@ public class VarLength {
     }
 
     private void readDataFromFile(String filePath) {
+        Utils.println("INIT DATA...");
         Scanner scanner = null;
         try {
             // Location of file to read
@@ -217,6 +223,7 @@ public class VarLength {
                 scanner.close();
             }
         }
+        Utils.println("--FINISH...");
     }
 //    public static void main(String[] args) {
 //        String fileData = "data.txt";

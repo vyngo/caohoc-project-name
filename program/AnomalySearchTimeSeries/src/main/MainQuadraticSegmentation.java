@@ -4,7 +4,6 @@
  */
 package main;
 
-import algorithms.BottomUpSegmentation;
 import algorithms.QuaradicSegmentation;
 import chart.JChartSegment;
 import common.SegmentationErrorCal;

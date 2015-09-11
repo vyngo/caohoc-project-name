@@ -18,7 +18,7 @@ public class MainVarLength {
     public static void main(String[] args) {
         // TODO code application logic here
         String fileData = "data.txt";
-        VarLength v = new VarLength(3.0, 1.0, 1);
+        VarLength v = new VarLength(3.0, 1.0);
         v.initData(fileData);
         v.run();
     }
