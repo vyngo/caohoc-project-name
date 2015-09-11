@@ -44,8 +44,15 @@ public class SWABSegmentation {
                 }
                 buffer.end = nexEnd;
             } else {
-                NSubsequence remain = new NSubsequence(buffer.begin, size - 1);
-                ret.add(remain);
+                List<Double> temp1 = new ArrayList<Double>();
+                for (int i = buffer.begin; i <= size - 1; i++) {
+                    temp1.add(data.get(i));
+                }
+                List<NSubsequence> remain = segmentationForBuffer(buffer.begin, temp1, e1);
+                for(NSubsequence s : remain){
+                    NSubsequence a = new NSubsequence(buffer.begin + s.getStart(), buffer.begin + s.getEnd());
+                    ret.add(a);
+                }
                 buffer.end = size;// halt
             }
             Utils.println("==========BUFFER==========");
