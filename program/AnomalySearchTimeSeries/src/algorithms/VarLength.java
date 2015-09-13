@@ -26,6 +26,7 @@ public class VarLength {
     private double e2;
     private int k;
     private double threshold;
+    private static final int K_MAX = 5;
 
     public VarLength(double e1, double e2) {
         series = new NTimeSeries();
@@ -65,6 +66,11 @@ public class VarLength {
     public void run() {
         Utils.println("RUN...");
         List<NSubsequence> candiates = segmentation();
+        Utils.println("CANDIDATES:");
+        Utils.println("size: " + candiates.size());
+        for (NSubsequence s : candiates) {
+            Utils.printSegment(s);
+        }
         anomalyPatterns.addAll(anomalyFind(candiates));
         for (NSubsequence n : anomalyPatterns) {
             Utils.printSegment(n);
@@ -95,6 +101,9 @@ public class VarLength {
             double[][] distanceMatrix = distanceMatrixCal(candidates, lmin, lmax);
             if (k <= 0) {
                 k = Double.valueOf(Math.ceil(0.05 * size)).intValue();
+                if( k > K_MAX){
+                    k = K_MAX;
+                }
             }
             List<Double> kDis = new ArrayList<Double>();
             for (int i = 0; i < size; i++) {
@@ -164,12 +173,13 @@ public class VarLength {
         int length = candidates.size();
         double[][] ret = new double[length][length];
         for (int i = 0; i < length; i++) {
-            for (int j = 0; j < length; j++) {
+            for (int j = 0; j <= i; j++) {
                 if (i == j) {
                     ret[i][j] = 0.0;
                     continue;
                 }
                 ret[i][j] = distance(candidates.get(i), candidates.get(j), lmin, lmax);
+                ret[j][i] = ret[i][j];
             }
         }
         return ret;

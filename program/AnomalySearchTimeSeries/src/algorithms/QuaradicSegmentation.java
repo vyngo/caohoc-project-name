@@ -23,6 +23,9 @@ public class QuaradicSegmentation {
         boolean halt = false;
         int start = 0;
         do {
+            if(start >= series.getNumberOfDataPoint()){
+                break;
+            }
             NSubsequence sequence = getASegment(start, series, e1);
             ret.add(sequence);
             int end = sequence.getEnd();
