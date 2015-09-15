@@ -14,9 +14,11 @@ import java.util.List;
 public class NTimeSeries {
 
     private List<Double> data = null;
+    private List<Double> rawData = null;
 
     public NTimeSeries() {
         data = new ArrayList<Double>();
+        rawData = new ArrayList<Double>();
     }
 
     public void clear() {
@@ -24,11 +26,16 @@ public class NTimeSeries {
             data.clear();
             data = null;
         }
+        if(rawData != null){
+            rawData.clear();
+            rawData = null;
+        }
     }
 
     public void reInitiate() {
         clear();
         data = new ArrayList<Double>();
+        rawData = new ArrayList<Double>();
     }
 
     public int getNumberOfDataPoint() {
@@ -39,10 +46,17 @@ public class NTimeSeries {
         if (data != null) {
             data.add(val);
         }
+        if(rawData != null){
+            rawData.add(val);
+        }
     }
 
     public List<Double> getData() {
         return data;
+    }
+    
+    public List<Double> getRawData(){
+        return rawData;
     }
 
 }
