@@ -50,6 +50,41 @@ public class DistanceCal {
 //        return Math.sqrt(ret);
 //    }
 
+//    private static double[] homothetic(double[] data, int length) { // length must be smaller than or equal to data.length
+//        double[] ret = new double[length];
+//        double y_max = Utils.max(data);
+//        double y_min = Utils.min(data);
+//        double x_center = (double) (data.length / 2);
+//        double y_center = (y_max + y_min) / 2.0;
+//        double ratio = (length * 1.0) / (data.length * 1.0);
+//        double[] newData = new double[data.length];
+//        double[] newIndex = new double[data.length];
+//        for (int i = 0; i < data.length; i++) {
+//            double y = ratio * (data[i] - y_center) + y_center;
+//            newData[i] = y;
+//            double x = ratio * (i - x_center) + x_center;
+//            newIndex[i] = x;
+//        }
+//        List<Double> candidate = new ArrayList<Double>();
+//        int centerIndex = (newData.length / 2);
+//
+//        int num = 0;
+//        for (int i = centerIndex; i >= 0 && num < length / 2; i -= Double.valueOf(1 / ratio).intValue()) {
+//            candidate.add(0, newData[i]);
+//            num++;
+//        }
+//        num = 0;
+//        for (int i = centerIndex + Double.valueOf(1 / ratio).intValue(); i < newData.length && num < length / 2; i += Double.valueOf(1 / ratio).intValue()) {
+//            candidate.add(newData[i]);
+//            num++;
+//        }
+//
+//        int cl = candidate.size();
+//        for (int i = 0; i < cl; i++) {
+//            ret[i] = candidate.get(i);
+//        }
+//        return ret;
+//    }
     private static double[] homothetic(double[] data, int length) { // length must be smaller than or equal to data.length
         double[] ret = new double[length];
         double y_max = Utils.max(data);
@@ -57,31 +92,21 @@ public class DistanceCal {
         double x_center = (double) (data.length / 2);
         double y_center = (y_max + y_min) / 2.0;
         double ratio = (length * 1.0) / (data.length * 1.0);
-        double[] newData = new double[data.length];
-        double[] newIndex = new double[data.length];
-        for (int i = 0; i < data.length; i++) {
-            double y = ratio * (data[i] - y_center) + y_center;
-            newData[i] = y;
-            double x = ratio * (i - x_center) + x_center;
-            newIndex[i] = x;
-        }
-        List<Double> candidate = new ArrayList<Double>();
-        int centerIndex = (newData.length / 2);
-
-        int num = 0;
-        for (int i = centerIndex; i >= 0 && num < length / 2; i -= Double.valueOf(1 / ratio).intValue()) {
-            candidate.add(0, newData[i]);
-            num++;
-        }
-        num = 0;
-        for (int i = centerIndex + Double.valueOf(1 / ratio).intValue(); i < newData.length && num < length / 2; i += Double.valueOf(1 / ratio).intValue()) {
-            candidate.add(newData[i]);
-            num++;
-        }
-
-        int cl = candidate.size();
-        for (int i = 0; i < cl; i++) {
-            ret[i] = candidate.get(i);
+        double X, Y;// data after homothetic
+        double x, y;// original data
+        int index = 0;
+        for (X = (-(length / 2)) + x_center; X < (length / 2) + x_center; X++) {
+            x = (X - x_center) / ratio + x_center;
+            int round_x = ((int) x);
+            if (round_x >= data.length - 1) {
+                y = -(x - round_x) * data[round_x - 1] + (-round_x + 1 + x) * data[round_x];
+//				System.out.println("for debug homothetic");
+            } else {
+                y = (x - round_x) * data[round_x + 1] + (round_x + 1 - x) * data[round_x];
+            }
+            Y = (y - y_center) * ratio + y_center;
+            ret[index] = Y;
+            index++;
         }
         return ret;
     }
