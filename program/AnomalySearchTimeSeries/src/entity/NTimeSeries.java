@@ -18,7 +18,6 @@ public class NTimeSeries {
 
     public NTimeSeries() {
         data = new ArrayList<Double>();
-        rawData = new ArrayList<Double>();
     }
 
     public void clear() {
@@ -35,7 +34,6 @@ public class NTimeSeries {
     public void reInitiate() {
         clear();
         data = new ArrayList<Double>();
-        rawData = new ArrayList<Double>();
     }
 
     public int getNumberOfDataPoint() {
@@ -46,9 +44,6 @@ public class NTimeSeries {
         if (data != null) {
             data.add(val);
         }
-        if(rawData != null){
-            rawData.add(val);
-        }
     }
 
     public List<Double> getData() {
@@ -58,5 +53,38 @@ public class NTimeSeries {
     public List<Double> getRawData(){
         return rawData;
     }
-
+    
+    public void zscore(){
+        rawData = new ArrayList<Double>();
+        //backup
+        for(double a : data){
+            rawData.add(a);
+        }
+        double mean = mean();
+        double std = std();
+        data.clear();
+        data = new ArrayList<Double>();
+        for(double a : rawData){
+            double s = (a - mean) / std;
+            data.add(s);
+        }
+    }
+    
+    public double mean(){
+        double ret = 0.0;
+        for(double a : data){
+            ret += a;
+        }
+        return ret / data.size();
+    }
+    
+    public double std(){
+        double ret = 0.0;
+        double mean = mean();
+        for(double a : data){
+            ret += (a-mean) * (a-mean);
+        }
+        ret = ret / ((double)data.size());
+        return Math.sqrt(ret);
+    }
 }

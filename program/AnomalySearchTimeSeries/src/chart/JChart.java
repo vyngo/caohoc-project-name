@@ -92,7 +92,7 @@ public class JChart extends ApplicationFrame {
      */
     private XYDataset createDataset(NTimeSeries data) {
         final XYSeries series = new XYSeries("");
-        List<Double> lst = data.getData();
+        List<Double> lst = (data.getRawData() == null || data.getRawData().isEmpty())? data.getData() : data.getRawData();
         int size = lst.size();
         for (int i = 0; i < size; i++) {
             try {

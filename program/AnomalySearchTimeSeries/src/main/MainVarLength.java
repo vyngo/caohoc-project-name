@@ -48,7 +48,7 @@ public class MainVarLength {
 
     private static void run(String fileData) {
         // TODO code application logic here
-        VarLength v = new VarLength(3.0, 1.0);
+        VarLength v = new VarLength(5.0, 1.0);
         v.initData(fileData);
         v.run();
     }
