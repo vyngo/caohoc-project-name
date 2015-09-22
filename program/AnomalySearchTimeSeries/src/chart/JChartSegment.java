@@ -142,7 +142,7 @@ public class JChartSegment extends ApplicationFrame {
             this.dataset = dataset;
             this.subsequences = subsequences;
             colors = new ArrayList<Color>();
-            colors.add(Color.black);
+            colors.add(Color.yellow);
             colors.add(Color.red);
             colors.add(Color.blue);
             colors.add(Color.green);

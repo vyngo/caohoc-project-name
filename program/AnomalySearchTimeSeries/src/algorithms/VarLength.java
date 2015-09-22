@@ -106,15 +106,21 @@ public class VarLength {
                 }
             }
             List<Double> kDis = new ArrayList<Double>();
+            
             for (int i = 0; i < size; i++) {
                 double tmp = calKDistance(i, k, distanceMatrix);
+              
                 kDis.add(tmp);
             }
             double median = Utils.median(kDis);
             List<Double> anomalyFactors = calAnomalyFactor(kDis, median);
+            Utils.println("========Anomaly====");
             for (int i = 0; i < size; i++) {
                 if (anomalyFactors.get(i) > threshold) {
+                    Utils.println("-----" + anomalyFactors.get(i));
                     ret.add(candidates.get(i));
+                }else{
+                    Utils.println("" + anomalyFactors.get(i));
                 }
             }
         }

@@ -55,6 +55,8 @@ public class MainQuadraticSegmentation {
 
     private static void run(String fileData) {
         // TODO code application logic here
+        double e1 = 6.5;
+        double e2 = 0.2;
         Utils.println("RUNNING...");
         Scanner scanner = null;
         NTimeSeries series = new NTimeSeries();
@@ -69,7 +71,7 @@ public class MainQuadraticSegmentation {
                 String line = draw.trim();
                 series.addData(Double.parseDouble(line));
             }
-            List<NSubsequence> subsequence = QuaradicSegmentation.segmentation(series, 3.0, 1.0);
+            List<NSubsequence> subsequence = QuaradicSegmentation.segmentation(series, e1, e2);
             Utils.println("================= RESULT ==============================");
             Utils.println("size: " + subsequence.size());
             for (NSubsequence s : subsequence) {

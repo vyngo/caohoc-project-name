@@ -25,6 +25,18 @@ public class DistanceCal {
             return euclid(a, tmp);
         }
     }
+    
+//    public static double distanceSegment(double[] a, double[] b) {
+//        if (a.length == b.length) {
+//            return euclidNomal(a, b);
+//        } else if (a.length > b.length) {
+//            double[] tmp = homothetic(a, b.length);
+//            return euclidNomal(b, tmp);
+//        } else {
+//            double[] tmp = homothetic(b, a.length);
+//            return euclidNomal(a, tmp);
+//        }
+//    }
 
     private static double euclid(double[] a, double[] b) {
         assert (a.length == b.length);
@@ -40,7 +52,7 @@ public class DistanceCal {
         }
         return Math.sqrt(ret);
     }
-//    private static double euclid(double[] a, double[] b) {
+//    private static double euclidNomal(double[] a, double[] b) {
 //        assert (a.length == b.length);
 //        double ret = 0.0;
 //        for (int i = 0; i < a.length; i++) {
