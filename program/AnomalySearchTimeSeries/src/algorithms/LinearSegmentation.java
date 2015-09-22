@@ -54,7 +54,7 @@ public class LinearSegmentation {
             double[] y = Utils.listToArray(subList);
             double[] x = new double[l];
             for (int i = 0; i < l; i++) {
-                x[i] = s + i;
+                x[i] = 0 + i;// start + i
             }
             double[] reg = LinearRegression.regress(x, y);
             if (reg[2] >= e1) {

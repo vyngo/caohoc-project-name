@@ -68,7 +68,7 @@ public class MainBottomUpSegmentation {
                 String line = draw.trim();
                 series.addData(Double.parseDouble(line));
             }
-            List<NSubsequence> subsequence = BottomUpSegmentation.segmentation(series, 3.0);
+            List<NSubsequence> subsequence = BottomUpSegmentation.segmentation(series, 6.5);
             Utils.println("================= RESULT ==============================");
             Utils.println("size: " + subsequence.size());
             for(NSubsequence s : subsequence){

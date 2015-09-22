@@ -49,11 +49,14 @@ public class MainVarLength {
     private static void run(String fileData) {
         // TODO code application logic here
         double e1 = 6.5;
-        double e2 = 0.2;
-        int k = 1;
-        double a = 3.0;
+        double e2 = 0.3;
+        int k = 0;
+        double a = 1.5;
         VarLength v = new VarLength(e1,e2,k,a);
         v.initData(fileData);
+        long begin = System.currentTimeMillis();
         v.run();
+        long end = System.currentTimeMillis();
+        System.out.println("Time: " + (end - begin));
     }
 }

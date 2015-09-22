@@ -89,7 +89,7 @@ public class SWABSegmentation {
             double[] y = Utils.listToArray(subList);
             double[] x = new double[l];
             for (int i = 0; i < l; i++) {
-                x[i] = s + i;
+                x[i] = 0 + i;// start + i
             }
             double[] reg = LinearRegression.regress(x, y);
             error = reg[2];
@@ -164,7 +164,7 @@ public class SWABSegmentation {
         double[] y = Utils.listToArray(subList);
         double[] x = new double[l];
         for (int i = 0; i < l; i++) {
-            x[i] = start + s + i;
+            x[i] = 0 + 0 + i;//start + s + i;
         }
         double[] reg = LinearRegression.regress(x, y);
         return reg[2];

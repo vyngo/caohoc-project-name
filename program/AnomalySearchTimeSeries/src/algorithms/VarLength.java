@@ -113,6 +113,7 @@ public class VarLength {
                 kDis.add(tmp);
             }
             double median = Utils.median(kDis);
+            Utils.println("======Median===== \n" + median);
             List<Double> anomalyFactors = calAnomalyFactor(kDis, median);
             Utils.println("========Anomaly====");
             for (int i = 0; i < size; i++) {

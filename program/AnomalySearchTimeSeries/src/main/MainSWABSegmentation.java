@@ -72,7 +72,7 @@ public class MainSWABSegmentation {
                 series.addData(Double.parseDouble(line));
             }
             int w = series.getNumberOfDataPoint() * 20 / 100;
-            List<NSubsequence> subsequence = SWABSegmentation.segmentation(series, 3.0, w);
+            List<NSubsequence> subsequence = SWABSegmentation.segmentation(series, 6.5, w);
             Utils.println("================= RESULT ==============================");
             Utils.println("size: " + subsequence.size());
             for(NSubsequence s : subsequence){
