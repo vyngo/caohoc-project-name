@@ -4,18 +4,25 @@
  */
 package main;
 
-import algorithms.VarLength;
+import algorithms.QuaradicSegmentation;
+import chart.JChartSegment;
+import common.SegmentationErrorCal;
+import common.Utils;
+import entity.NSubsequence;
+import entity.NTimeSeries;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.List;
+import java.util.Scanner;
 import javax.swing.*;
 
 /**
  *
  * @author Khanh Vy
  */
-public class MainVarLength {
+public class ReadDataFromTo {
 
     /**
      * @param args the command line arguments
@@ -48,15 +55,34 @@ public class MainVarLength {
 
     private static void run(String fileData) {
         // TODO code application logic here
-        double e1 = 1.2;
-        double e2 = 1.0;
-        int k = 0;
-        double a = 1.5;
-        VarLength v = new VarLength(e1,e2,k,a);
-        v.initData(fileData);
-        long begin = System.currentTimeMillis();
-        v.run();
-        long end = System.currentTimeMillis();
-        System.out.println("Time: " + (end - begin));
+       
+        Scanner scanner = null;
+       int from = 0;
+       int to = 10000;
+        try {
+            // Location of file to read
+            File file = new File(fileData);
+            scanner = new Scanner(file);
+            int i = 0;
+            while (scanner.hasNextLine()) {
+                i++;
+                if(i < from){
+                    continue;
+                } if(i > to){
+                    break;
+                }
+                String draw = scanner.nextLine();
+                String line = draw.trim();
+                System.out.println(line);
+            }
+            System.out.println("Done");
+            scanner.close();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            if (scanner != null) {
+                scanner.close();
+            }
+        }
     }
 }

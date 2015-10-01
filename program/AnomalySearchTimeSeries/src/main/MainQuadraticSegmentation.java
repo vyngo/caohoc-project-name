@@ -55,8 +55,8 @@ public class MainQuadraticSegmentation {
 
     private static void run(String fileData) {
         // TODO code application logic here
-        double e1 = 6.0;
-        double e2 = 0.2;
+        double e1 = 0.7;
+        double e2 = 0.1;
         Utils.println("RUNNING...");
         Scanner scanner = null;
         NTimeSeries series = new NTimeSeries();
