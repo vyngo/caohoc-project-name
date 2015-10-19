@@ -28,7 +28,7 @@ namespace AlomalyTimeSeriesDetector
                 string file = openFileDialog1.FileName;
                 if (string.IsNullOrEmpty(file))
                 {
-                    MessageBox.Show("File is not valid");
+                    MessageBox.Show(this, "File is not valid", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 ReadDataFromFile readData = new ReadDataFromFile(file);

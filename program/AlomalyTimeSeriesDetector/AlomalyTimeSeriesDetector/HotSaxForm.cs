@@ -34,7 +34,7 @@ namespace AlomalyTimeSeriesDetector
                 string file = hotSax_openFileDialog.FileName;
                 if (string.IsNullOrEmpty(file))
                 {
-                    MessageBox.Show("File is not valid", "Error");
+                    MessageBox.Show(this, "File is not valid", "Error", MessageBoxButtons.OK,MessageBoxIcon.Error);
                     return;
                 }
                 ReadDataFromFile readData = new ReadDataFromFile(file);
@@ -46,7 +46,7 @@ namespace AlomalyTimeSeriesDetector
         private void run_button_Click(object sender, EventArgs e)
         {
             if (this.series == null) {
-                MessageBox.Show("There is no file", "Error");
+                MessageBox.Show(this, "There is no file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
         }
@@ -55,7 +55,7 @@ namespace AlomalyTimeSeriesDetector
         {
             if (this.series == null)
             {
-                MessageBox.Show("There is no file", "Error");
+                MessageBox.Show(this, "There is no file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
         }
