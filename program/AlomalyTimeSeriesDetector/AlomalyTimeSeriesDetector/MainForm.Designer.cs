@@ -34,6 +34,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.hotSaxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,7 +51,8 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadDataToolStripMenuItem});
+            this.loadDataToolStripMenuItem,
+            this.hotSaxToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -58,7 +60,7 @@
             // loadDataToolStripMenuItem
             // 
             this.loadDataToolStripMenuItem.Name = "loadDataToolStripMenuItem";
-            this.loadDataToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.loadDataToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadDataToolStripMenuItem.Text = "Load Data";
             this.loadDataToolStripMenuItem.Click += new System.EventHandler(this.loadDataToolStripMenuItem_Click);
             // 
@@ -69,20 +71,28 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(193, 131);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(134, 106);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(378, 13);
+            this.label1.Size = new System.Drawing.Size(567, 20);
             this.label1.TabIndex = 1;
             this.label1.Text = "This is demo application for finding anomalies subsequences in time series data";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(324, 158);
+            this.label2.Location = new System.Drawing.Point(342, 171);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(64, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "2015 - 2016";
+            // 
+            // hotSaxToolStripMenuItem
+            // 
+            this.hotSaxToolStripMenuItem.Name = "hotSaxToolStripMenuItem";
+            this.hotSaxToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.hotSaxToolStripMenuItem.Text = "Hot Sax";
+            this.hotSaxToolStripMenuItem.Click += new System.EventHandler(this.hotSaxToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -114,6 +124,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ToolStripMenuItem hotSaxToolStripMenuItem;
     }
 }
 

@@ -37,5 +37,11 @@ namespace AlomalyTimeSeriesDetector
                 plot.Show();
             }
         }
+
+        private void hotSaxToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HotSaxForm form = new HotSaxForm();
+            form.Show();
+        }
     }
 }
