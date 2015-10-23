@@ -21,6 +21,7 @@ namespace AlomalyTimeSeriesDetector
         private int numDataPoint = 0;
         private int paaLength = 0;
         private double[] anomalizedSeries;
+        private double[] drawData;
         private int breakpoint = 8;
         public HotSaxForm()
         {
@@ -45,7 +46,8 @@ namespace AlomalyTimeSeriesDetector
                 }
                 ReadDataFromFile readData = new ReadDataFromFile(file);
                 this.series = readData.read();
-                
+                println("Load data successfully: " + this.series.getNumberOfDataPoint() + " points");
+                Console.WriteLine("Done");
             }
         }
 
@@ -74,8 +76,13 @@ namespace AlomalyTimeSeriesDetector
                 }
                 this.paaLength = int.Parse(this.paaLength_textbox.Text);
                 this.anomalizedSeries = Normalize.ZeroMin(this.series.getData().ToArray(), this.numDataPoint);
+                this.drawData = new double[this.numDataPoint];
+                for (int i = 0; i < this.numDataPoint; i++) {
+                    this.drawData[i] = this.series.getData()[i];
+                }
                 HotSax hotsax = new HotSax();
-                int anomalIndex = hotsax.run(this.anomalizedSeries, this.paaLength, this.subsequencesLength, this.breakpoint);
+                int anomalIndex = hotsax.run(this.anomalizedSeries, this.paaLength, this.subsequencesLength, this.breakpoint, this.drawData);
+                this.println("Anomal index: " + anomalIndex);
             }catch(Exception ex){
             }finally{
                stNor.Stop();
@@ -90,6 +97,10 @@ namespace AlomalyTimeSeriesDetector
                 MessageBox.Show(this, "There is no file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+        }
+
+        private void println(string msg){
+            this.hotsaxLog_richTextBox.AppendText(msg + "\n");
         }
     }
 }

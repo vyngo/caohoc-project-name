@@ -8,21 +8,72 @@ namespace AlomalyTimeSeriesDetector.common
 {
     class HotSax
     {
-        private HotSaxStructure dataStruc = new HotSaxStructure();
+        private HotSaxStructure dataStruc;
         private double b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0, b7 = 0, b8 = 0, b9 = 0;
 
-        public int run(double[] data, int paaLength, int subsequeceLength, int breakpoint) 
+        public int run(double[] data, int paaLength, int subsequeceLength, int breakpoint, double[] rawData) 
         {
             initBreakpoint(breakpoint);
             List<double[]> candiates = slidingWindow(data, subsequeceLength);
+            this.dataStruc = new HotSaxStructure();
             for (int index = 0; index < candiates.Count; index++ )
             {
                 double[] candiate = candiates.ElementAt(index);
                 string[] sax = getSAXString(candiate, paaLength, breakpoint);
+                Console.WriteLine("[HotSax.run] getSaxString of index: " + index + " (" + sax + ")");
                 this.dataStruc.insert(sax);
             }
-            int anomalIndex = 0;
+            List<int> outerLoop = this.dataStruc.getShortOuterLoop();
+            Console.WriteLine("[HotSax.run] get outerLoop: " + outerLoop);
+            
+            int anomalIndex = findIndexAnomaly(outerLoop, subsequeceLength, rawData);
             return anomalIndex;
+        }
+
+        private double[] getDataFromIndex(double[] rawData, int subsequenceLength, int index) {
+            double[] ret = new double[subsequenceLength];
+            int j = 0;
+            for (int i = index; i < (index + subsequenceLength); i++) {
+                ret[j] = rawData[i];
+                j++;
+            }
+            return ret;
+        }
+
+        private int findIndexAnomaly(List<int> outerLoop,  int subsequeceLength, double[] rawData)
+        {
+            int best_so_far_loc = -1;
+            double best_so_far_dist = 0.0;
+            int size = outerLoop.Count;
+            int l = 0;
+            foreach (int outerIndex in outerLoop)
+            {
+                l++;
+                Console.WriteLine("[HotSax.findIndexAnomaly] outer loop of index: " + outerIndex + "(" + l + "/" + size + ")");
+                double nearest_neighbor_dist = double.MaxValue;
+                List<int> innerLoop = this.dataStruc.getShortInnerLoop(outerIndex);
+                double[] from = getDataFromIndex(rawData, subsequeceLength, outerIndex);
+                foreach (int innerIndex in innerLoop) {
+                    //Console.WriteLine("[HotSax.findIndexAnomaly] inner loop of index: " + innerIndex);
+                    if (Math.Abs(outerIndex - innerIndex) >= subsequeceLength) {
+                       double[] to = getDataFromIndex(rawData, subsequeceLength, innerIndex);
+                        double dist = Distance.distance(from, to);
+                        if (dist < nearest_neighbor_dist)
+                        {
+                            nearest_neighbor_dist = dist;
+                        }
+                       if (dist < best_so_far_dist) {
+                           Console.WriteLine("[HotSax.findIndexAnomaly] break inner loop at index: " + innerIndex);
+                           break;
+                       }
+                    }
+                }
+                if (nearest_neighbor_dist > best_so_far_dist) {
+                    best_so_far_dist = nearest_neighbor_dist;
+                    best_so_far_loc = outerIndex;
+                }
+            }
+            return best_so_far_loc;
         }
         private List<double[]> slidingWindow(double[] data, int subsequenceLength) {
             List<double[]> ret = new List<double[]>();
@@ -34,6 +85,7 @@ namespace AlomalyTimeSeriesDetector.common
                     temp[k] = data[j];
                     k++;
                 }
+                Console.WriteLine("[slidingWindow] get subsequebce: " + i);
                 ret.Add(temp);
             }
             return ret;
@@ -395,6 +447,51 @@ namespace AlomalyTimeSeriesDetector.common
                 }
                 updateArray(indexs);
             }
+
+            public List<int> getShortOuterLoop() {
+                List<int> ret = new List<int>();
+                List<SaxArrayEntry> tmp = this.array.OrderBy(o => o.num).ToList();
+                foreach(SaxArrayEntry entry in tmp){
+                    ret.Add(entry.index);
+                }
+                return ret;
+            }
+
+            public List<int> getShortInnerLoop(int outerIndex) {
+                List<int> ret = new List<int>();
+                string[] sax = this.array[outerIndex].saxString;
+                List<PairMatch> tmp = new List<PairMatch>();
+                foreach (SaxTrieNode node in this.trie)
+                {
+                    if (node != null && node.value != null)
+                    {
+                        int num = 0;
+                        for (int i = 0; i < node.value.Length; i++)
+                        {
+                            if (sax[i].Equals(node.value[i]))
+                            {
+                                num++;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        foreach (int index in node.indexs) {
+                            PairMatch pair = new PairMatch();
+                            pair.index = index;
+                            pair.numMatch = num;
+                            tmp.Add(pair);
+                        }
+                    }
+                }
+                List<PairMatch> shortTmp = tmp.OrderByDescending(o => o.numMatch).ToList();
+                foreach (PairMatch c in shortTmp) {
+                    ret.Add(c.index);
+                }
+                return ret;
+            }
+
             private void updateArray(List<int> indexs)
             {
                 int size = indexs.Count;
@@ -445,7 +542,7 @@ namespace AlomalyTimeSeriesDetector.common
                 }
                 return null;
             }
-            public List<int> getIndexs(string[] sax)
+            private List<int> getIndexs(string[] sax)
             {
                 string orig = "";
                 foreach (string c in sax)
@@ -469,7 +566,7 @@ namespace AlomalyTimeSeriesDetector.common
                 }
                 return null;
             }
-            public List<int> getMaxMatch(string[] sax)
+            private List<int> getMaxMatch(string[] sax)
             {
                 int numMach = int.MinValue;
                 SaxTrieNode c = null;
@@ -502,7 +599,7 @@ namespace AlomalyTimeSeriesDetector.common
                 }
                 return null;
             }
-            public int getMaxCount()
+            private int getMaxCount()
             {
                 int max = int.MinValue;
                 int index = 0;
@@ -527,6 +624,7 @@ namespace AlomalyTimeSeriesDetector.common
                     entry.saxString[i] = sax[i];
                 }
                 entry.num = 1;
+                entry.index = this.array.Count;
                 this.array.Add(entry);
                 return this.array.Count - 1;
             }
@@ -536,12 +634,19 @@ namespace AlomalyTimeSeriesDetector.common
         {
             public string[] saxString;
             public int num;
+            public int index;
         }
 
         private class SaxTrieNode
         {
             public string[] value;
             public List<int> indexs;
+        }
+
+        private class PairMatch
+        {
+            public int index;
+            public int numMatch;
         }
     }
 }

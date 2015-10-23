@@ -50,10 +50,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="common\Distance.cs" />
     <Compile Include="common\HotSax.cs" />
     <Compile Include="common\Normalize.cs" />
     <Compile Include="common\PAA.cs" />
     <Compile Include="common\ReadDataFromFile.cs" />
+    <Compile Include="common\Utils.cs" />
     <Compile Include="entity\NSubsequence.cs" />
     <Compile Include="entity\NTimeSeries.cs" />
     <Compile Include="HotSaxForm.cs">
