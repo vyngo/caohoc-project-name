@@ -31,10 +31,10 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hotSaxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.hotSaxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,6 +64,13 @@
             this.loadDataToolStripMenuItem.Text = "Load Data";
             this.loadDataToolStripMenuItem.Click += new System.EventHandler(this.loadDataToolStripMenuItem_Click);
             // 
+            // hotSaxToolStripMenuItem
+            // 
+            this.hotSaxToolStripMenuItem.Name = "hotSaxToolStripMenuItem";
+            this.hotSaxToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.hotSaxToolStripMenuItem.Text = "Hot Sax";
+            this.hotSaxToolStripMenuItem.Click += new System.EventHandler(this.hotSaxToolStripMenuItem_Click);
+            // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
@@ -86,13 +93,6 @@
             this.label2.Size = new System.Drawing.Size(64, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "2015 - 2016";
-            // 
-            // hotSaxToolStripMenuItem
-            // 
-            this.hotSaxToolStripMenuItem.Name = "hotSaxToolStripMenuItem";
-            this.hotSaxToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.hotSaxToolStripMenuItem.Text = "Hot Sax";
-            this.hotSaxToolStripMenuItem.Click += new System.EventHandler(this.hotSaxToolStripMenuItem_Click);
             // 
             // MainForm
             // 

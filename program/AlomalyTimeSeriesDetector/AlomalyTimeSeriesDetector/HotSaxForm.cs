@@ -35,6 +35,7 @@ namespace AlomalyTimeSeriesDetector
 
         private void loadData_button_Click(object sender, EventArgs e)
         {
+            this.hotsaxLog_richTextBox.Text = "";
             DialogResult result = hotSax_openFileDialog.ShowDialog(); // Show the dialog.
             if (result == DialogResult.OK) // Test result.
             {
@@ -80,14 +81,20 @@ namespace AlomalyTimeSeriesDetector
                 for (int i = 0; i < this.numDataPoint; i++) {
                     this.drawData[i] = this.series.getData()[i];
                 }
-                HotSax hotsax = new HotSax();
+                HotSax hotsax = new HotSax(this.hotsaxLog_richTextBox);
                 int anomalIndex = hotsax.run(this.anomalizedSeries, this.paaLength, this.subsequencesLength, this.breakpoint, this.drawData);
-                this.println("Anomal index: " + anomalIndex);
+                //this.println("Anomal index: " + anomalIndex);
+                NSubsequence anomaly = new NSubsequence();
+                anomaly.setStart(anomalIndex);
+                anomaly.setEnd(anomalIndex + this.subsequencesLength - 1);
+                this.anomalies.Add(anomaly);
             }catch(Exception ex){
             }finally{
                stNor.Stop();
                string timeNor = stNor.Elapsed.ToString();
+               this.println("Time: " + timeNor);
             }
+            Console.WriteLine("Finish HotSax");
         }
 
         private void plot_button_Click(object sender, EventArgs e)
@@ -97,6 +104,13 @@ namespace AlomalyTimeSeriesDetector
                 MessageBox.Show(this, "There is no file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            
+            NTimeSeries tmp = new NTimeSeries();
+            for (int i = 0; i < this.numDataPoint; i++) {
+                tmp.addData(this.series.getData()[i]);
+            }
+            TimeSeriesPlot plot = new TimeSeriesPlot(tmp, this.anomalies);
+            plot.Show();
         }
 
         private void println(string msg){

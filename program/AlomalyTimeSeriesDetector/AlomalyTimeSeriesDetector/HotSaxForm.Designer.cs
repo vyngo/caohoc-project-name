@@ -127,6 +127,7 @@
             // 
             // hotsaxLog_richTextBox
             // 
+            this.hotsaxLog_richTextBox.HideSelection = false;
             this.hotsaxLog_richTextBox.Location = new System.Drawing.Point(15, 115);
             this.hotsaxLog_richTextBox.Name = "hotsaxLog_richTextBox";
             this.hotsaxLog_richTextBox.Size = new System.Drawing.Size(820, 406);

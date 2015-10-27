@@ -19,7 +19,7 @@ namespace AlomalyTimeSeriesDetector.entity
 
         public NSubsequence(int start, int end)
         {
-            if (start <= end) {
+            if (start > end) {
                 MessageBox.Show("can't create Subsequence with start-end: " + start + "-" + end);
                 return;
             }

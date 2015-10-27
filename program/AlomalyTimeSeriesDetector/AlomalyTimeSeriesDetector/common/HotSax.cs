@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace AlomalyTimeSeriesDetector.common
 {
@@ -10,6 +11,13 @@ namespace AlomalyTimeSeriesDetector.common
     {
         private HotSaxStructure dataStruc;
         private double b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0, b7 = 0, b8 = 0, b9 = 0;
+        private RichTextBox box;
+        private double bestSoFarDist;
+        private int bestSofarLoc;
+
+        public HotSax(RichTextBox box) {
+            this.box = box;
+        }
 
         public int run(double[] data, int paaLength, int subsequeceLength, int breakpoint, double[] rawData) 
         {
@@ -20,13 +28,16 @@ namespace AlomalyTimeSeriesDetector.common
             {
                 double[] candiate = candiates.ElementAt(index);
                 string[] sax = getSAXString(candiate, paaLength, breakpoint);
-                Console.WriteLine("[HotSax.run] getSaxString of index: " + index + " (" + sax + ")");
+                this.WriteLine("[HotSax.run] getSaxString of index: " + index + " (" + string.Join("",sax) + ")");
                 this.dataStruc.insert(sax);
             }
             List<int> outerLoop = this.dataStruc.getShortOuterLoop();
-            Console.WriteLine("[HotSax.run] get outerLoop: " + outerLoop);
+            this.WriteLine("[HotSax.run] get outerLoop: " + outerLoop);
             
             int anomalIndex = findIndexAnomaly(outerLoop, subsequeceLength, rawData);
+            this.WriteLine("===================RESULT=========================");
+            this.WriteLine("anomal location: " + this.bestSofarLoc);
+            this.WriteLine("anomal dis: " + this.bestSoFarDist);
             return anomalIndex;
         }
 
@@ -49,12 +60,12 @@ namespace AlomalyTimeSeriesDetector.common
             foreach (int outerIndex in outerLoop)
             {
                 l++;
-                Console.WriteLine("[HotSax.findIndexAnomaly] outer loop of index: " + outerIndex + "(" + l + "/" + size + ")");
+                this.WriteLine("[HotSax.findIndexAnomaly] outer loop of index: " + outerIndex + "(" + l + "/" + size + ")");
                 double nearest_neighbor_dist = double.MaxValue;
                 List<int> innerLoop = this.dataStruc.getShortInnerLoop(outerIndex);
                 double[] from = getDataFromIndex(rawData, subsequeceLength, outerIndex);
                 foreach (int innerIndex in innerLoop) {
-                    //Console.WriteLine("[HotSax.findIndexAnomaly] inner loop of index: " + innerIndex);
+                    //this.WriteLine("[HotSax.findIndexAnomaly] inner loop of index: " + innerIndex);
                     if (Math.Abs(outerIndex - innerIndex) >= subsequeceLength) {
                        double[] to = getDataFromIndex(rawData, subsequeceLength, innerIndex);
                         double dist = Distance.distance(from, to);
@@ -63,7 +74,7 @@ namespace AlomalyTimeSeriesDetector.common
                             nearest_neighbor_dist = dist;
                         }
                        if (dist < best_so_far_dist) {
-                           Console.WriteLine("[HotSax.findIndexAnomaly] break inner loop at index: " + innerIndex);
+                           this.WriteLine("[HotSax.findIndexAnomaly] break inner loop at index: " + innerIndex);
                            break;
                        }
                     }
@@ -73,6 +84,8 @@ namespace AlomalyTimeSeriesDetector.common
                     best_so_far_loc = outerIndex;
                 }
             }
+            this.bestSoFarDist = best_so_far_dist;
+            this.bestSofarLoc = best_so_far_loc;
             return best_so_far_loc;
         }
         private List<double[]> slidingWindow(double[] data, int subsequenceLength) {
@@ -85,7 +98,7 @@ namespace AlomalyTimeSeriesDetector.common
                     temp[k] = data[j];
                     k++;
                 }
-                Console.WriteLine("[slidingWindow] get subsequebce: " + i);
+                this.WriteLine("[slidingWindow] get subsequebce: " + i);
                 ret.Add(temp);
             }
             return ret;
@@ -647,6 +660,10 @@ namespace AlomalyTimeSeriesDetector.common
         {
             public int index;
             public int numMatch;
+        }
+
+        private void WriteLine(string msg){
+            this.box.AppendText(msg + "\n");
         }
     }
 }
