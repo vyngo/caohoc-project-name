@@ -51,10 +51,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="common\Distance.cs" />
+    <Compile Include="common\GaussElimination.cs" />
     <Compile Include="common\HotSax.cs" />
+    <Compile Include="common\LinearRegression.cs" />
     <Compile Include="common\Normalize.cs" />
     <Compile Include="common\PAA.cs" />
     <Compile Include="common\ReadDataFromFile.cs" />
+    <Compile Include="common\SWABSegmentation.cs" />
     <Compile Include="common\Utils.cs" />
     <Compile Include="entity\NSubsequence.cs" />
     <Compile Include="entity\NTimeSeries.cs" />
@@ -72,6 +75,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SWAB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SWAB.Designer.cs">
+      <DependentUpon>SWAB.cs</DependentUpon>
+    </Compile>
     <Compile Include="TimeSeriesPlot.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +102,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SWAB.resx">
+      <DependentUpon>SWAB.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TimeSeriesPlot.resx">
       <DependentUpon>TimeSeriesPlot.cs</DependentUpon>
     </EmbeddedResource>

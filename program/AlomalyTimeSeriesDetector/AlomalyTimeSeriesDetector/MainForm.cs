@@ -43,5 +43,11 @@ namespace AlomalyTimeSeriesDetector
             HotSaxForm form = new HotSaxForm();
             form.Show();
         }
+
+        private void sWABToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SWAB form = new SWAB();
+            form.Show();
+        }
     }
 }

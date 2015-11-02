@@ -35,6 +35,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.sWABToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,7 +53,8 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadDataToolStripMenuItem,
-            this.hotSaxToolStripMenuItem});
+            this.hotSaxToolStripMenuItem,
+            this.sWABToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -94,6 +96,13 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "2015 - 2016";
             // 
+            // sWABToolStripMenuItem
+            // 
+            this.sWABToolStripMenuItem.Name = "sWABToolStripMenuItem";
+            this.sWABToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.sWABToolStripMenuItem.Text = "SWAB";
+            this.sWABToolStripMenuItem.Click += new System.EventHandler(this.sWABToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -125,6 +134,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ToolStripMenuItem hotSaxToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sWABToolStripMenuItem;
     }
 }
 
