@@ -36,23 +36,11 @@ namespace AlomalyTimeSeriesDetector.common
                 asub.setEnd(buffer.begin + asub.getEnd());
                 ret.Add(asub);
                 buffer.begin = asub.getEnd() + 1;
-                if (buffer.end < size - 1)
-                {
-                    int nexEnd = bestLine(e1, buffer.end, data);
-                    int newsize = nexEnd - buffer.begin + 1;
-                    if (newsize < lower_bound)
-                    {
-                        nexEnd = lower_bound + buffer.begin - 1;
-                    }
-                    else if (newsize > upper_bound)
-                    {
-                        nexEnd = upper_bound + buffer.begin - 1;
-                    }
-                    buffer.end = nexEnd;
-                }
-                else
-                {
-                    List<double> temp1 = new List<double>();
+
+                int nexEnd = bestLine(e1, buffer.end, data);
+                if (nexEnd >= size - 1)
+                {// segment remain
+                    List<Double> temp1 = new List<Double>();
                     for (int i = buffer.begin; i <= size - 1; i++)
                     {
                         temp1.Add(data[i]);
@@ -65,17 +53,34 @@ namespace AlomalyTimeSeriesDetector.common
                     }
                     buffer.end = size;// halt
                 }
+                else
+                {
+                    int newsize = nexEnd - buffer.begin + 1;
+                    if (newsize < lower_bound)
+                    {
+                        nexEnd = lower_bound + buffer.begin - 1;
+                    }
+                    else if (newsize > upper_bound)
+                    {
+                        nexEnd = upper_bound + buffer.begin - 1;
+                    }
+                    buffer.end = nexEnd;
+                }
+
                 this.WriteLine("==========BUFFER==========");
                 this.WriteLine("buffer: " + buffer.begin + " - " + buffer.end);
             }
             return ret;
         }
 
-        private NSubsequence getFirstSubsequence(List<NSubsequence> sub) {
+        private NSubsequence getFirstSubsequence(List<NSubsequence> sub)
+        {
             int start = int.MaxValue;
             int end = 0;
-            foreach (NSubsequence s in sub) {
-                if (s.getStart() < start) {
+            foreach (NSubsequence s in sub)
+            {
+                if (s.getStart() < start)
+                {
                     start = s.getStart();
                     end = s.getEnd();
                 }
@@ -165,7 +170,7 @@ namespace AlomalyTimeSeriesDetector.common
                 {
                     mergeCost.RemoveAt(cost.index + 1);
                     double costi = calculateErrorForBuffer(start, data, m);
-                    mergeCost[cost.index] =  costi;
+                    mergeCost[cost.index] = costi;
                 }
                 else
                 {
@@ -210,7 +215,7 @@ namespace AlomalyTimeSeriesDetector.common
             int size = data.Count;
             for (int i = 0; i < size; i++)
             {
-                if (min > data[i]);
+                if (min > data[i])
                 {
                     min = data[(i)];
                     index = i;

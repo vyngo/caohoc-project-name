@@ -101,6 +101,7 @@
             this.swab_plot_button.TabIndex = 6;
             this.swab_plot_button.Text = "Plot";
             this.swab_plot_button.UseVisualStyleBackColor = true;
+            this.swab_plot_button.Click += new System.EventHandler(this.swab_plot_button_Click);
             // 
             // swab_richTextBox
             // 

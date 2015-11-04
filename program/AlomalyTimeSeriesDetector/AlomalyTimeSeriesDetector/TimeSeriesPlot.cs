@@ -16,6 +16,7 @@ namespace AlomalyTimeSeriesDetector
     {
         NTimeSeries series;
         List<NSubsequence> anomalies;
+        List<NSubsequence> segments;
         public TimeSeriesPlot( NTimeSeries series)
         {
             this.series = series;
@@ -26,6 +27,14 @@ namespace AlomalyTimeSeriesDetector
         {
             this.series = series;
             this.anomalies = anomalies;
+            InitializeComponent();
+        }
+
+        public TimeSeriesPlot(NTimeSeries series, List<NSubsequence> anomalies, List<NSubsequence> segments)
+        {
+            this.series = series;
+            this.anomalies = anomalies;
+            this.segments = segments;
             InitializeComponent();
         }
 
@@ -123,6 +132,37 @@ namespace AlomalyTimeSeriesDetector
                     }
                     index.Clear();
                     value.Clear();
+                }
+            }else if(this.segments != null && this.segments.Count > 0){
+                bool afirst = true;
+                int c = 0;
+                List<Color> colors = new List<Color>();
+                colors.Add(Color.Blue);
+                colors.Add(Color.Green);
+                colors.Add(Color.Red);
+                colors.Add(Color.Purple);
+                foreach (NSubsequence sub in this.segments)
+                {
+                    List<double> anomalIndex = new List<double>();
+                    List<double> anomalValue = new List<double>();
+                    for (int i = sub.getStart(); i <= sub.getEnd(); i++)
+                    {
+                        anomalIndex.Add(i);
+                        anomalValue.Add(data[i]);
+                    }
+                    PointPairList anomalList = new PointPairList();
+                    anomalList.Add(anomalIndex.ToArray(), anomalValue.ToArray());
+                    Color color = colors[c % 4];
+                    if (afirst)
+                    {
+                        myPane.AddCurve("segment", anomalList, color, SymbolType.None);
+                        afirst = false;
+                    }
+                    else
+                    {
+                        myPane.AddCurve("", anomalList, color, SymbolType.None);
+                    }
+                    c++;
                 }
             }else{
                 List<double> index = new List<double>();

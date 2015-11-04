@@ -34,16 +34,9 @@ public class SWABSegmentation {
             asub.setEnd(buffer.begin + asub.getEnd());
             ret.add(asub);
             buffer.begin = asub.getEnd() + 1;
-            if (buffer.end < size - 1) {
-                int nexEnd = bestLine(e1, buffer.end, data);
-                int newsize = nexEnd - buffer.begin + 1;
-                if (newsize < lower_bound) {
-                    nexEnd = lower_bound + buffer.begin - 1;
-                } else if (newsize > upper_bound) {
-                    nexEnd = upper_bound + buffer.begin - 1;
-                }
-                buffer.end = nexEnd;
-            } else {
+
+            int nexEnd = bestLine(e1, buffer.end, data);
+            if (nexEnd >= size - 1) {// segment leave out
                 List<Double> temp1 = new ArrayList<Double>();
                 for (int i = buffer.begin; i <= size - 1; i++) {
                     temp1.add(data.get(i));
@@ -54,7 +47,16 @@ public class SWABSegmentation {
                     ret.add(a);
                 }
                 buffer.end = size;// halt
+            } else {
+                int newsize = nexEnd - buffer.begin + 1;
+                if (newsize < lower_bound) {
+                    nexEnd = lower_bound + buffer.begin - 1;
+                } else if (newsize > upper_bound) {
+                    nexEnd = upper_bound + buffer.begin - 1;
+                }
+                buffer.end = nexEnd;
             }
+
             Utils.println("==========BUFFER==========");
             Utils.println("buffer: " + buffer.begin + " - " + buffer.end);
         }
@@ -154,8 +156,8 @@ public class SWABSegmentation {
         }
         return ret;
     }
-    
-     private static double calculateErrorForBuffer(int start, List<Double> data, NSubsequence seq) {
+
+    private static double calculateErrorForBuffer(int start, List<Double> data, NSubsequence seq) {
         int s = seq.getStart();
         int e = seq.getEnd();
         int l = seq.getLength();
@@ -182,7 +184,7 @@ public class SWABSegmentation {
         }
         return new SWABSegmentation.MinMergCost(index, min);
     }
-    
+
     private static class MinMergCost {
 
         public int index;

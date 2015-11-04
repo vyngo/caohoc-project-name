@@ -16,7 +16,7 @@ namespace AlomalyTimeSeriesDetector
     public partial class SWAB : Form
     {
         private NTimeSeries series = null;
-        private List<NSubsequence> segments = new List<NSubsequence>();
+        private List<NSubsequence> segments = null;
       
         public SWAB()
         {
@@ -75,7 +75,12 @@ namespace AlomalyTimeSeriesDetector
                 for(int i = 0; i < numDataPoint && i < this.series.getData().Count; i++){
                     tmp.addData(this.series.getData()[i]);
                 }
-                seg.segmentation(tmp, e1, w);
+                this.segments = seg.segmentation(tmp, e1, w);
+                println("===========RESULT=================");
+                println("Number of segments: " + this.segments.Count);
+                foreach (NSubsequence s in this.segments) {
+                    println(s.getStart() + "-" + s.getEnd() + " length: " + (s.getEnd() - s.getStart() + 1));
+                }
             }catch(Exception ex){
             }finally{
                stNor.Stop();
@@ -83,6 +88,30 @@ namespace AlomalyTimeSeriesDetector
                this.println("Time: " + timeNor);
             }
             println("Finish SWAB");
+        }
+
+        private void swab_plot_button_Click(object sender, EventArgs e)
+        {
+            if (this.series == null) {
+                    MessageBox.Show(this, "There is no file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+               }
+            if (this.segments == null) {
+                    MessageBox.Show(this, "There is no segments", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            if(String.IsNullOrEmpty(this.swab_numDataPoint_textbox.Text))
+            {
+                MessageBox.Show(this, "number data point is required", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            int numDataPoint = int.Parse(this.swab_numDataPoint_textbox.Text);
+            NTimeSeries tmp = new NTimeSeries();
+            for(int i = 0; i < numDataPoint && i < this.series.getData().Count; i++){
+                    tmp.addData(this.series.getData()[i]);
+                }
+            TimeSeriesPlot plot = new TimeSeriesPlot(tmp, null, segments);
+            plot.Show();
         }
             
     }
