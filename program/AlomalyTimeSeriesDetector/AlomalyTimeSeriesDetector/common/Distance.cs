@@ -63,7 +63,7 @@ namespace AlomalyTimeSeriesDetector.common
                 if (round_x >= data.Length - 1)
                 {
                     y = -(x - round_x) * data[round_x - 1] + (-round_x + 1 + x) * data[round_x];
-                    //				System.out.println("for debug homothetic");
+                   
                 }
                 else
                 {

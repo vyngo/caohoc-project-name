@@ -30,7 +30,7 @@ public class MainSWABSegmentation {
      */
     public static void main(String[] args) throws Exception {
         // TODO code application logic here
-        
+
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
         JFrame.setDefaultLookAndFeelDecorated(true);

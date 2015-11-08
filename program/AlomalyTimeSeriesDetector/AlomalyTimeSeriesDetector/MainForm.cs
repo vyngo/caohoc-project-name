@@ -49,5 +49,11 @@ namespace AlomalyTimeSeriesDetector
             SWAB form = new SWAB();
             form.Show();
         }
+
+        private void quadraticToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Quadratic form = new Quadratic();
+            form.Show();
+        }
     }
 }

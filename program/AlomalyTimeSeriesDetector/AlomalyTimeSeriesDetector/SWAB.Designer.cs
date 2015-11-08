@@ -75,7 +75,7 @@
             // 
             // swab_choosefile_button
             // 
-            this.swab_choosefile_button.Location = new System.Drawing.Point(185, 74);
+            this.swab_choosefile_button.Location = new System.Drawing.Point(145, 74);
             this.swab_choosefile_button.Name = "swab_choosefile_button";
             this.swab_choosefile_button.Size = new System.Drawing.Size(75, 23);
             this.swab_choosefile_button.TabIndex = 4;
@@ -95,7 +95,7 @@
             // 
             // swab_plot_button
             // 
-            this.swab_plot_button.Location = new System.Drawing.Point(533, 74);
+            this.swab_plot_button.Location = new System.Drawing.Point(594, 73);
             this.swab_plot_button.Name = "swab_plot_button";
             this.swab_plot_button.Size = new System.Drawing.Size(75, 23);
             this.swab_plot_button.TabIndex = 6;

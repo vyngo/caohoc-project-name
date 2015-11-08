@@ -50,6 +50,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="common\QuadraticRegression.cs" />
+    <Compile Include="common\QuadraticSegmentation.cs" />
     <Compile Include="common\Distance.cs" />
     <Compile Include="common\GaussElimination.cs" />
     <Compile Include="common\HotSax.cs" />
@@ -75,6 +77,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Quadratic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Quadratic.Designer.cs">
+      <DependentUpon>Quadratic.cs</DependentUpon>
+    </Compile>
     <Compile Include="SWAB.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,6 +110,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Quadratic.resx">
+      <DependentUpon>Quadratic.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SWAB.resx">
       <DependentUpon>SWAB.cs</DependentUpon>
     </EmbeddedResource>
