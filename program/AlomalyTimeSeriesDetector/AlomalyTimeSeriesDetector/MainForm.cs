@@ -55,5 +55,11 @@ namespace AlomalyTimeSeriesDetector
             Quadratic form = new Quadratic();
             form.Show();
         }
+
+        private void variableLengthMethodToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            VariableLengthMethod form = new VariableLengthMethod();
+            form.Show();
+        }
     }
 }
