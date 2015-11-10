@@ -45,7 +45,7 @@
             this.varlength_plot_button = new System.Windows.Forms.Button();
             this.varlength_openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.varlength_log_richTextBox = new System.Windows.Forms.RichTextBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.varlength_result_richTextBox = new System.Windows.Forms.RichTextBox();
             this.varlength_result_label = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -193,13 +193,13 @@
             this.varlength_log_richTextBox.TabIndex = 15;
             this.varlength_log_richTextBox.Text = "";
             // 
-            // richTextBox1
+            // varlength_result_richTextBox
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(695, 188);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(154, 300);
-            this.richTextBox1.TabIndex = 16;
-            this.richTextBox1.Text = "";
+            this.varlength_result_richTextBox.Location = new System.Drawing.Point(695, 188);
+            this.varlength_result_richTextBox.Name = "varlength_result_richTextBox";
+            this.varlength_result_richTextBox.Size = new System.Drawing.Size(154, 300);
+            this.varlength_result_richTextBox.TabIndex = 16;
+            this.varlength_result_richTextBox.Text = "";
             // 
             // varlength_result_label
             // 
@@ -216,7 +216,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(861, 500);
             this.Controls.Add(this.varlength_result_label);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.varlength_result_richTextBox);
             this.Controls.Add(this.varlength_log_richTextBox);
             this.Controls.Add(this.varlength_plot_button);
             this.Controls.Add(this.varlength_run_button);
@@ -261,7 +261,7 @@
         private System.Windows.Forms.Button varlength_plot_button;
         private System.Windows.Forms.OpenFileDialog varlength_openFileDialog;
         private System.Windows.Forms.RichTextBox varlength_log_richTextBox;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox varlength_result_richTextBox;
         private System.Windows.Forms.Label varlength_result_label;
     }
 }

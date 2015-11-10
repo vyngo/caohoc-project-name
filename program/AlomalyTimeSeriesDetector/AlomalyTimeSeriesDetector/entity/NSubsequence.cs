@@ -13,6 +13,8 @@ namespace AlomalyTimeSeriesDetector.entity
         private int start;
         private int end;
 
+        double anomalFactor;
+
         public NSubsequence()
         {
         }
@@ -50,6 +52,16 @@ namespace AlomalyTimeSeriesDetector.entity
         public int getLength()
         {
             return end - start + 1;
+        }
+
+        public double getAnomalyFactor()
+        {
+            return this.anomalFactor;
+        }
+
+        public void setAnomalyFactor(double a)
+        {
+            this.anomalFactor = a;
         }
     }
 }
