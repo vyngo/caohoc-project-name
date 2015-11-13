@@ -68,7 +68,7 @@ namespace AlomalyTimeSeriesDetector.common
                 double[] x = new double[l];
                 for (int i = 0; i < l; i++)
                 {
-                    x[i] =  start + i; // 0 + i
+                    x[i] =  0 + i; //start + i;
                 }
                 double[] reg = QuadraticRegression.regress(x, y);
                 if (reg[3] >= e1)
