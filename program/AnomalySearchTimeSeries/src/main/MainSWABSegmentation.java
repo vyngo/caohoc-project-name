@@ -65,14 +65,14 @@ public class MainSWABSegmentation {
             File file = new File(fileData);
             scanner = new Scanner(file);
             int i = 0;
-            while (scanner.hasNextLine()) {
+            while (scanner.hasNextLine() && series.getData().size() < 10000) {
                 i++;
                 String draw = scanner.nextLine();
                 String line = draw.trim();
                 series.addData(Double.parseDouble(line));
             }
-            int w = 4000;
-            List<NSubsequence> subsequence = SWABSegmentation.segmentation(series, 6.5, w);
+            int w = 1000;
+            List<NSubsequence> subsequence = SWABSegmentation.segmentation(series, 60000, w);
             Utils.println("================= RESULT ==============================");
             Utils.println("size: " + subsequence.size());
             for(NSubsequence s : subsequence){
