@@ -27,7 +27,20 @@ namespace AlomalyTimeSeriesDetector.common
             this.RatioOfExtremePoint = ratio;
             this.MINIMUM_LENGTH = minLength;
             this.globalIndex = 0;
-            this.originalData = series.getData().ToArray();
+            double[] tmp = series.getData().ToArray();
+            double min = Utils.min(tmp);
+            if (min < 0)
+            {
+                this.originalData = new double[tmp.Length];
+                for (int i = 0; i < tmp.Length; i++)
+                {
+                    this.originalData[i] = tmp[i] + (-min) + 1; // scale along y to get positive value;
+                }
+            }
+            else
+            {
+                this.originalData = series.getData().ToArray();
+            }
             List<int> indexs = ExtractExtremePoint();
             if (indexs.IndexOf(0) < 0) {
                 indexs.Insert(0, 0);

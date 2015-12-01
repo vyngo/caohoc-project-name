@@ -29,10 +29,17 @@ namespace AlomalyTimeSeriesDetector
             if (this.varlength_algorithm_comboBox.SelectedItem.Equals("SWAB"))
             {
                 this.varlength_e2_label.Text = "Buffer Size";
+                this.varlength_e1_label.Text = "Regression Error";
             }
-            else
+            else if (this.varlength_algorithm_comboBox.SelectedItem.Equals("Quadratic"))
             {
                 this.varlength_e2_label.Text = "Non-Self Match Threshold";
+                this.varlength_e1_label.Text = "Regression Error";
+            }
+            else 
+            {
+                this.varlength_e2_label.Text = "Minimum Length";
+                this.varlength_e1_label.Text = "Ratio";
             }
         }
 
@@ -91,7 +98,7 @@ namespace AlomalyTimeSeriesDetector
                 candiadates = seg.segmentation(tmp, e1, w);
                 this.writeResult("Segmentation algorithm SWAB");
             }
-            else
+            else if (this.varlength_algorithm_comboBox.SelectedItem.Equals("Quadratic"))
             {
                 if (String.IsNullOrEmpty(this.varlength_e2_textBox.Text))
                 {
@@ -101,6 +108,23 @@ namespace AlomalyTimeSeriesDetector
                 double e2 = double.Parse(this.varlength_e2_textBox.Text);
                 QuadradicSegmentation seg = new QuadradicSegmentation(this.varlength_log_richTextBox);
                 candiadates = seg.segmentation(tmp, e1, e2);
+                this.writeResult("Segmentation algorithm Quadratic");
+            }
+            else
+            {
+                if (String.IsNullOrEmpty(this.varlength_e1_textBox.Text))
+                {
+                    MessageBox.Show(this, "Ratio is required", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                double ratio = double.Parse(this.varlength_e1_textBox.Text);
+                int minLength = 0;
+                if (!String.IsNullOrEmpty(this.varlength_e2_textBox.Text))
+                {
+                    minLength = int.Parse(this.varlength_e2_textBox.Text);
+                }
+                ExtreamePointSegmentation seg = new ExtreamePointSegmentation(this.varlength_log_richTextBox);
+                candiadates = seg.segmentation(tmp, e1, minLength);
                 this.writeResult("Segmentation algorithm Quadratic");
             }
             stSeg.Stop();

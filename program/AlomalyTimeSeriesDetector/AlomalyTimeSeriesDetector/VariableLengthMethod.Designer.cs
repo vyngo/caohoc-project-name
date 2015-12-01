@@ -134,7 +134,8 @@
             this.varlength_algorithm_comboBox.FormattingEnabled = true;
             this.varlength_algorithm_comboBox.Items.AddRange(new object[] {
             "Quadratic",
-            "SWAB"});
+            "SWAB",
+            "Extrem Points"});
             this.varlength_algorithm_comboBox.Location = new System.Drawing.Point(153, 82);
             this.varlength_algorithm_comboBox.Name = "varlength_algorithm_comboBox";
             this.varlength_algorithm_comboBox.Size = new System.Drawing.Size(121, 21);
