@@ -61,5 +61,11 @@ namespace AlomalyTimeSeriesDetector
             VariableLengthMethod form = new VariableLengthMethod();
             form.Show();
         }
+
+        private void extreamPointToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExtreamPointForm form = new ExtreamPointForm();
+            form.Show();
+        }
     }
 }

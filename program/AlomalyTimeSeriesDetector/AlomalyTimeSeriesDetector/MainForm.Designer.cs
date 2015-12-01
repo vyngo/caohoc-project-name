@@ -34,10 +34,11 @@
             this.hotSaxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sWABToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quadraticToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.variableLengthMethodToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.variableLengthMethodToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.extreamPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,7 +59,8 @@
             this.hotSaxToolStripMenuItem,
             this.sWABToolStripMenuItem,
             this.quadraticToolStripMenuItem,
-            this.variableLengthMethodToolStripMenuItem});
+            this.variableLengthMethodToolStripMenuItem,
+            this.extreamPointToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -91,6 +93,13 @@
             this.quadraticToolStripMenuItem.Text = "Quadratic";
             this.quadraticToolStripMenuItem.Click += new System.EventHandler(this.quadraticToolStripMenuItem_Click);
             // 
+            // variableLengthMethodToolStripMenuItem
+            // 
+            this.variableLengthMethodToolStripMenuItem.Name = "variableLengthMethodToolStripMenuItem";
+            this.variableLengthMethodToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.variableLengthMethodToolStripMenuItem.Text = "Variable Length Method";
+            this.variableLengthMethodToolStripMenuItem.Click += new System.EventHandler(this.variableLengthMethodToolStripMenuItem_Click);
+            // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
@@ -114,12 +123,12 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "2015 - 2016";
             // 
-            // variableLengthMethodToolStripMenuItem
+            // extreamPointToolStripMenuItem
             // 
-            this.variableLengthMethodToolStripMenuItem.Name = "variableLengthMethodToolStripMenuItem";
-            this.variableLengthMethodToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.variableLengthMethodToolStripMenuItem.Text = "Variable Length Method";
-            this.variableLengthMethodToolStripMenuItem.Click += new System.EventHandler(this.variableLengthMethodToolStripMenuItem_Click);
+            this.extreamPointToolStripMenuItem.Name = "extreamPointToolStripMenuItem";
+            this.extreamPointToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.extreamPointToolStripMenuItem.Text = "Extream Point";
+            this.extreamPointToolStripMenuItem.Click += new System.EventHandler(this.extreamPointToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -155,6 +164,7 @@
         private System.Windows.Forms.ToolStripMenuItem sWABToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem quadraticToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem variableLengthMethodToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem extreamPointToolStripMenuItem;
     }
 }
 
