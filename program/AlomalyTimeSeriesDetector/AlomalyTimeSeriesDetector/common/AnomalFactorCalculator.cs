@@ -86,7 +86,7 @@ namespace AlomalyTimeSeriesDetector.common
             List<double> tmp = new List<double>();
             for (int i = 0; i < size; i++)
             {
-                if (pattern != i)
+                if (pattern != i && matrix[pattern, i] > 0.0)
                 {
                     tmp.Add(matrix[pattern, i]);
                 }
@@ -104,7 +104,7 @@ namespace AlomalyTimeSeriesDetector.common
                 for (int j = 0; j <= i; j++)
                 {
                     
-                    if (i == j)
+                    if (i == j || Utils.isOverLap(candidates[i], candidates[j]))
                     {
                         ret[i, j] = 0.0;
                         continue;
