@@ -15,6 +15,40 @@ namespace AlomalyTimeSeriesDetector.common
         {
             this.fileName = fileName;
         }
+        public NTimeSeries read(int fromIndex, int toIndex)
+        {
+            // TODO code application logic here
+            System.IO.StreamReader scanner = null;
+            NTimeSeries series = new NTimeSeries();
+            try
+            {
+                // Location of file to read
+
+                scanner = new System.IO.StreamReader(fileName);
+                string line = null;
+                int index = 0;
+                while ((line = scanner.ReadLine()) != null)
+                {
+                    if (index >= fromIndex && index <= toIndex)
+                    {
+                        series.addData(Double.Parse(line));
+                    }
+                    index++;
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(ex, ex.StackTrace);
+            }
+            finally
+            {
+                if (scanner != null)
+                {
+                    scanner.Close();
+                }
+            }
+            return series;
+        }
         public NTimeSeries read()
         {
             // TODO code application logic here

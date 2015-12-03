@@ -23,6 +23,8 @@ namespace AlomalyTimeSeriesDetector
         private double[] anomalizedSeries;
         private double[] drawData;
         private int breakpoint = 8;
+        private int from = 0;
+        private int to = 0;
         public HotSaxForm()
         {
             InitializeComponent();
@@ -46,8 +48,29 @@ namespace AlomalyTimeSeriesDetector
                     return;
                 }
                 ReadDataFromFile readData = new ReadDataFromFile(file);
-                this.series = readData.read();
-                println("Load data successfully: " + this.series.getNumberOfDataPoint() + " points");
+                if (!String.IsNullOrEmpty(this.numberDataPoint_textBox.Text))
+                {
+                    string numDataText = this.numberDataPoint_textBox.Text;
+                    string[] arr = numDataText.Split('-');
+                    if (arr.Length < 2)
+                    {
+                        this.to = int.Parse(arr[0]);
+                    }
+                    else
+                    {
+                        this.from = int.Parse(arr[0]);
+                        this.to = int.Parse(arr[1]);
+                    }
+                    this.series = readData.read(from, to);
+                    this.to = from + this.series.getNumberOfDataPoint() - 1;
+                }
+                else
+                {
+                    this.series = readData.read();
+                    this.to = this.series.getNumberOfDataPoint() - 1;
+                    this.from = 0;
+                }
+                println("Load data successfully: start from " + this.from + " to " + this.to);
                 Console.WriteLine("Done");
             }
         }
@@ -61,11 +84,7 @@ namespace AlomalyTimeSeriesDetector
                     MessageBox.Show(this, "There is no file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                if(String.IsNullOrEmpty(this.numberDataPoint_textBox.Text)){
-                    MessageBox.Show(this, "number data point is required", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                this.numDataPoint = int.Parse(this.numberDataPoint_textBox.Text);
+                this.numDataPoint = this.series.getNumberOfDataPoint();
                 if(String.IsNullOrEmpty(this.subsequence_texbox.Text)){
                      MessageBox.Show(this, "Subsequence length is required", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -106,7 +125,8 @@ namespace AlomalyTimeSeriesDetector
             }
             
             NTimeSeries tmp = new NTimeSeries();
-            for (int i = 0; i < this.numDataPoint; i++) {
+            int l = this.series.getNumberOfDataPoint();
+            for (int i = 0; i < l; i++) {
                 tmp.addData(this.series.getData()[i]);
             }
             TimeSeriesPlot plot = new TimeSeriesPlot(tmp, this.anomalies);

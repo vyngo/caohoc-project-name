@@ -17,6 +17,8 @@ namespace AlomalyTimeSeriesDetector
     {
         private NTimeSeries series = null;
         private List<NSubsequence> segments = null;
+        private int from = 0;
+        private int to = 0;
         public ExtreamPointForm()
         {
             InitializeComponent();
@@ -35,8 +37,29 @@ namespace AlomalyTimeSeriesDetector
                     return;
                 }
                 ReadDataFromFile readData = new ReadDataFromFile(file);
-                this.series = readData.read();
-                println("Load data successfully: " + this.series.getNumberOfDataPoint() + " points");
+                if (!String.IsNullOrEmpty(this.extreamPoint_numDataPoints_textBox.Text))
+                {
+                    string numDataText = this.extreamPoint_numDataPoints_textBox.Text;
+                    string[] arr = numDataText.Split('-');
+                    if (arr.Length < 2)
+                    {
+                        this.to = int.Parse(arr[0]);
+                    }
+                    else
+                    {
+                        this.from = int.Parse(arr[0]);
+                        this.to = int.Parse(arr[1]);
+                    }
+                    this.series = readData.read(from, to);
+                    this.to = from + this.series.getNumberOfDataPoint() - 1;
+                }
+                else 
+                {
+                    this.series = readData.read();
+                    this.to = this.series.getNumberOfDataPoint() - 1;
+                    this.from = 0;
+                }
+                println("Load data successfully: start from " + this.from + " to " + this.to);
                 Console.WriteLine("Done");
             }
         }
@@ -58,14 +81,8 @@ namespace AlomalyTimeSeriesDetector
                 MessageBox.Show(this, "There is no segments", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (String.IsNullOrEmpty(this.extreamPoint_numDataPoints_textBox.Text))
-            {
-                MessageBox.Show(this, "number data point is required", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            int numDataPoint = int.Parse(this.extreamPoint_numDataPoints_textBox.Text);
             NTimeSeries tmp = new NTimeSeries();
-            for (int i = 0; i < numDataPoint && i < this.series.getData().Count; i++)
+            for (int i = 0; i < this.series.getData().Count; i++)
             {
                 tmp.addData(this.series.getData()[i]);
             }
@@ -84,12 +101,7 @@ namespace AlomalyTimeSeriesDetector
                     MessageBox.Show(this, "There is no file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                if (String.IsNullOrEmpty(this.extreamPoint_numDataPoints_textBox.Text))
-                {
-                    MessageBox.Show(this, "number data point is required", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                int numDataPoint = int.Parse(this.extreamPoint_numDataPoints_textBox.Text);
+                
                 if (String.IsNullOrEmpty(this.exxtreamPoint_ratio_textBox.Text))
                 {
                     MessageBox.Show(this, "Max Error is required", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -104,7 +116,7 @@ namespace AlomalyTimeSeriesDetector
                 }
                 int minLength = int.Parse(this.extreamPoint_minLength_textBox.Text);
                 NTimeSeries tmp = new NTimeSeries();
-                for (int i = 0; i < numDataPoint && i < this.series.getData().Count; i++)
+                for (int i = 0; i < this.series.getData().Count; i++)
                 {
                     tmp.addData(this.series.getData()[i]);
                 }
