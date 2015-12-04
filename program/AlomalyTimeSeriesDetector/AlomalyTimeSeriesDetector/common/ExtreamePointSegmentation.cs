@@ -79,7 +79,7 @@ namespace AlomalyTimeSeriesDetector.common
             {
                 extremePoint.Add(iMin); extremePoint.Add(iMax);
                 iMin = FindMinimum();
-                if (i > 0)
+                if (iMin > 0)
                     extremePoint.Add(iMin);
 
             }

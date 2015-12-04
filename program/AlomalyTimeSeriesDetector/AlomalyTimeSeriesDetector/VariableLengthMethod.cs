@@ -26,6 +26,12 @@ namespace AlomalyTimeSeriesDetector
             this.varlength_algorithm_comboBox.SelectedItem = "Quadratic";
         }
 
+        private void reset() {
+            this.anomalies.Clear();
+            this.varlength_log_richTextBox.Text = "";
+            this.varlength_result_richTextBox.Text = "";
+        }
+
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (this.varlength_algorithm_comboBox.SelectedItem.Equals("SWAB"))
@@ -89,7 +95,7 @@ namespace AlomalyTimeSeriesDetector
         {
             Stopwatch stTotal = new Stopwatch();
             stTotal.Start();
-           
+            reset();
             NTimeSeries tmp = new NTimeSeries();
             for (int i = 0; i < this.series.getData().Count; i++)
             {

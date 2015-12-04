@@ -35,6 +35,11 @@ namespace AlomalyTimeSeriesDetector
 
         }
 
+        private void reset() {
+            this.anomalies.Clear();
+            this.hotsaxLog_richTextBox.Text = "";
+        }
+
         private void loadData_button_Click(object sender, EventArgs e)
         {
             this.hotsaxLog_richTextBox.Text = "";
@@ -80,6 +85,7 @@ namespace AlomalyTimeSeriesDetector
             Stopwatch stNor = new Stopwatch();
             stNor.Start();
             try{
+                reset();
                 if (this.series == null) {
                     MessageBox.Show(this, "There is no file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;

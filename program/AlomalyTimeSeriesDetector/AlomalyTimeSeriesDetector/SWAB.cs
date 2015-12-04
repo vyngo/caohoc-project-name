@@ -24,6 +24,11 @@ namespace AlomalyTimeSeriesDetector
             InitializeComponent();
         }
 
+        private void reset() {
+            this.segments = null;
+            this.swab_richTextBox.Text = "";
+        }
+
         private void swab_choosefile_button_Click(object sender, EventArgs e)
         {
             this.swab_richTextBox.Text = "";
@@ -75,6 +80,7 @@ namespace AlomalyTimeSeriesDetector
             stNor.Start();
             try
             {
+                reset();
                 if (this.series == null)
                 {
                     MessageBox.Show(this, "There is no file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

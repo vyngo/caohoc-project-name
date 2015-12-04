@@ -24,6 +24,11 @@ namespace AlomalyTimeSeriesDetector
             InitializeComponent();
         }
 
+        private void reset(){
+            this.segments = null;
+            this.quadratic_richTextBox.Text = "";
+        }
+
         private void quadratic_chooseFile_button_Click(object sender, EventArgs e)
         {
             this.quadratic_richTextBox.Text = "";
@@ -96,6 +101,7 @@ namespace AlomalyTimeSeriesDetector
             stNor.Start();
             try
             {
+                reset();
                 if (this.series == null)
                 {
                     MessageBox.Show(this, "There is no file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -24,6 +24,11 @@ namespace AlomalyTimeSeriesDetector
             InitializeComponent();
         }
 
+        private void reset() {
+            this.segments = null;
+            this.extreamPoint_log_richTextBox.Text = "";
+        }
+
         private void extreamPoint_chooseFile_button_Click(object sender, EventArgs e)
         {
             this.extreamPoint_log_richTextBox.Text = "";
@@ -96,6 +101,7 @@ namespace AlomalyTimeSeriesDetector
             stNor.Start();
             try
             {
+                reset();
                 if (this.series == null)
                 {
                     MessageBox.Show(this, "There is no file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
