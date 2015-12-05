@@ -4,9 +4,19 @@
  */
 package algorithms;
 
+import chart.JChartSegment;
+import common.SegmentationErrorCal;
 import common.Utils;
+import entity.NSubsequence;
+import entity.NTimeSeries;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import javax.swing.*;
 
 /**
  *
@@ -25,24 +35,11 @@ public class DistanceCal {
             return euclid(a, tmp);
         }
     }
-    
-//    public static double distanceSegment(double[] a, double[] b) {
-//        if (a.length == b.length) {
-//            return euclidNomal(a, b);
-//        } else if (a.length > b.length) {
-//            double[] tmp = homothetic(a, b.length);
-//            return euclidNomal(b, tmp);
-//        } else {
-//            double[] tmp = homothetic(b, a.length);
-//            return euclidNomal(a, tmp);
-//        }
-//    }
 
     private static double euclid(double[] a, double[] b) {
-        assert (a.length == b.length);
         double ret = 0.0;
         double beta = 0.0;
-        for(int i = 0; i < a.length; i++){
+        for (int i = 0; i < a.length; i++) {
             beta += (b[i] - a[i]);
         }
         beta = beta / a.length;
@@ -52,52 +49,8 @@ public class DistanceCal {
         }
         return Math.sqrt(ret);
     }
-//    private static double euclidNomal(double[] a, double[] b) {
-//        assert (a.length == b.length);
-//        double ret = 0.0;
-//        for (int i = 0; i < a.length; i++) {
-//            double tmp = (a[i] - b[i]) * (a[i] - b[i]);
-//            ret += tmp;
-//        }
-//        return Math.sqrt(ret);
-//    }
 
-//    private static double[] homothetic(double[] data, int length) { // length must be smaller than or equal to data.length
-//        double[] ret = new double[length];
-//        double y_max = Utils.max(data);
-//        double y_min = Utils.min(data);
-//        double x_center = (double) (data.length / 2);
-//        double y_center = (y_max + y_min) / 2.0;
-//        double ratio = (length * 1.0) / (data.length * 1.0);
-//        double[] newData = new double[data.length];
-//        double[] newIndex = new double[data.length];
-//        for (int i = 0; i < data.length; i++) {
-//            double y = ratio * (data[i] - y_center) + y_center;
-//            newData[i] = y;
-//            double x = ratio * (i - x_center) + x_center;
-//            newIndex[i] = x;
-//        }
-//        List<Double> candidate = new ArrayList<Double>();
-//        int centerIndex = (newData.length / 2);
-//
-//        int num = 0;
-//        for (int i = centerIndex; i >= 0 && num < length / 2; i -= Double.valueOf(1 / ratio).intValue()) {
-//            candidate.add(0, newData[i]);
-//            num++;
-//        }
-//        num = 0;
-//        for (int i = centerIndex + Double.valueOf(1 / ratio).intValue(); i < newData.length && num < length / 2; i += Double.valueOf(1 / ratio).intValue()) {
-//            candidate.add(newData[i]);
-//            num++;
-//        }
-//
-//        int cl = candidate.size();
-//        for (int i = 0; i < cl; i++) {
-//            ret[i] = candidate.get(i);
-//        }
-//        return ret;
-//    }
-    private static double[] homothetic(double[] data, int length) { // length must be smaller than or equal to data.length
+    private static double[] homothetic(double[] data, int length) {
         double[] ret = new double[length];
         double y_max = Utils.max(data);
         double y_min = Utils.min(data);
@@ -107,12 +60,12 @@ public class DistanceCal {
         double X, Y;// data after homothetic
         double x, y;// original data
         int index = 0;
-        for (X = (-(length / 2)) + x_center; X < (length / 2) + x_center; X++) {
+        for (X = (-(length / 2)) + x_center; (X < (length / 2) + x_center) || index < length; X++) {
             x = (X - x_center) / ratio + x_center;
             int round_x = ((int) x);
             if (round_x >= data.length - 1) {
                 y = -(x - round_x) * data[round_x - 1] + (-round_x + 1 + x) * data[round_x];
-//				System.out.println("for debug homothetic");
+
             } else {
                 y = (x - round_x) * data[round_x + 1] + (round_x + 1 - x) * data[round_x];
             }
@@ -122,34 +75,76 @@ public class DistanceCal {
         }
         return ret;
     }
-//    public static void main(String[] args) {
-//        Scanner scanner = null;
-//        try {
-//            // Location of file to read
-//            File file = new File("data.txt");
-//            scanner = new Scanner(file);
-//            int i = 0;
-//            List<Double> series = new ArrayList<Double>();
-//            while (scanner.hasNextLine()) {
-//                i++;
-//                String line = scanner.nextLine();
-//                series.add(Double.parseDouble(line));
-//            }
-//            double[] d = new double[series.size()];
-//            for(int j = 0; j < series.size(); j++){
-//                d[j] = series.get(j);
-//            }
-//            double[] s = homothetic(d, 50);
-//            for(double a : s){
-//                System.out.println(a);
-//            }
-//            scanner.close();
-//        } catch (Exception ex) {
-//            ex.printStackTrace(System.out);
-//        } finally {
-//            if (scanner != null) {
-//                scanner.close();
-//            }
-//        }
-//    }
+
+    public static void main(String[] args) throws Exception {
+        // TODO code application logic here
+
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        JDialog.setDefaultLookAndFeelDecorated(true);
+        JFrame frame = new JFrame("JComboBox Test");
+        frame.setLayout(new FlowLayout());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JButton button = new JButton("Select File");
+        button.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                JFileChooser fileChooser = new JFileChooser();
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    run(selectedFile.getPath());
+                }
+            }
+        });
+        frame.add(button);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    private static void run(String fileData) {
+        Utils.println("RUNNING...");
+        Scanner scanner = null;
+        NTimeSeries series = new NTimeSeries();
+        try {
+            // Location of file to read
+            File file = new File(fileData);
+            scanner = new Scanner(file);
+            int i = 0;
+            while (scanner.hasNextLine() && series.getData().size() < 10000) {
+                i++;
+                String draw = scanner.nextLine();
+                String line = draw.trim();
+                series.addData(Double.parseDouble(line));
+            }
+            List<NSubsequence> subsequence = new ArrayList<NSubsequence>();
+            List<Double> data = series.getData();
+            double[] raw = new double[data.size()];
+            for (i = 0; i < raw.length; i++) {
+                raw[i] = data.get(i);
+            }
+            Utils.println("old length " + raw.length);
+            int l = raw.length * 150 / 100;
+            Utils.println("new length " + l);
+            if (l == raw.length) {
+                JChartSegment.drawChart(series, subsequence);
+            } else {
+                double[] newRaw = homothetic(raw, l);
+                NTimeSeries news = new NTimeSeries();
+                for (i = 0; i < l; i++) {
+                    news.addData(newRaw[i]);
+                }
+                JChartSegment.drawChart(news, subsequence);
+            }
+            scanner.close();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            if (scanner != null) {
+                scanner.close();
+            }
+        }
+    }
 }

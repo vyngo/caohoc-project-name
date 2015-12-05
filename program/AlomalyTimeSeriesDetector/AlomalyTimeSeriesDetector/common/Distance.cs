@@ -8,25 +8,45 @@ namespace AlomalyTimeSeriesDetector.common
 {
     class Distance
     {
+        //public static double distance(double[] a, double[] b)
+        //{
+        //    if (a.Length == b.Length)
+        //    {
+        //        return euclid(a, b);
+        //    }
+        //    else if (a.Length > b.Length)
+        //    {
+        //        double[] tmp = homothetic(a, b.Length);
+        //        return euclid(b, tmp);
+        //    }
+        //    else
+        //    {
+        //        double[] tmp = homothetic(b, a.Length);
+        //        return euclid(a, tmp);
+        //    }
+        //}
+
         public static double distance(double[] a, double[] b)
         {
             if (a.Length == b.Length)
             {
                 return euclid(a, b);
             }
-            else if (a.Length > b.Length)
-            {
-                double[] tmp = homothetic(a, b.Length);
-                return euclid(b, tmp);
-            }
             else
             {
-                double[] tmp = homothetic(b, a.Length);
-                return euclid(a, tmp);
+                int medium = (a.Length + b.Length) / 2;
+                double[] tmpA = a;
+                double[] tmpB = b;
+                if (a.Length != medium) {
+                    tmpA = homothetic(a, medium);
+                }
+                if (b.Length != medium) {
+                    tmpB = homothetic(b, medium);
+                }
+                return euclid(tmpA, tmpB);
             }
+            
         }
-
-
 
         private static double euclid(double[] a, double[] b)
         {
@@ -46,7 +66,7 @@ namespace AlomalyTimeSeriesDetector.common
         }
 
         private static double[] homothetic(double[] data, int length)
-        { // length must be smaller than or equal to data.length
+        {
             double[] ret = new double[length];
             double y_max = Utils.max(data);
             double y_min = Utils.min(data);
@@ -56,7 +76,7 @@ namespace AlomalyTimeSeriesDetector.common
             double X, Y;// data after homothetic
             double x, y;// original data
             int index = 0;
-            for (X = (-(length / 2)) + x_center; X < (length / 2) + x_center; X++)
+            for (X = (-(length / 2)) + x_center; (X < (length / 2) + x_center) || index < length; X++)
             {
                 x = (X - x_center) / ratio + x_center;
                 int round_x = ((int)x);
