@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="common\AnomalFactorCalculator.cs" />
+    <Compile Include="common\DTWDistance.cs" />
     <Compile Include="common\ExtreamePointSegmentation.cs" />
     <Compile Include="common\QuadraticRegression.cs" />
     <Compile Include="common\QuadraticSegmentation.cs" />
@@ -109,6 +110,12 @@
     <Compile Include="VariableLengthMethod.Designer.cs">
       <DependentUpon>VariableLengthMethod.cs</DependentUpon>
     </Compile>
+    <Compile Include="VLWDT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VLWDT.Designer.cs">
+      <DependentUpon>VLWDT.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ExtreamPointForm.resx">
       <DependentUpon>ExtreamPointForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -138,6 +145,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VariableLengthMethod.resx">
       <DependentUpon>VariableLengthMethod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VLWDT.resx">
+      <DependentUpon>VLWDT.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

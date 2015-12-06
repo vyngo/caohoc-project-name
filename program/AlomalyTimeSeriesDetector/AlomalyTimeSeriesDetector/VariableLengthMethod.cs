@@ -53,7 +53,7 @@ namespace AlomalyTimeSeriesDetector
 
         private void varlength_choose_button_Click(object sender, EventArgs e)
         {
-            this.varlength_log_richTextBox.Text = "";
+            reset();
             DialogResult result = this.varlength_openFileDialog.ShowDialog(); // Show the dialog.
             if (result == DialogResult.OK) // Test result.
             {
