@@ -238,7 +238,23 @@ namespace AlomalyTimeSeriesDetector
                         if ((tmp.getStart() >= n.getStart() && tmp.getStart() <= n.getEnd())
                                 || (tmp.getStart() == n.getEnd() + 1))
                         {
-                            n.setEnd(tmp.getEnd());
+                            int startMin = (tmp.getStart() >= n.getStart()) ? n.getStart() : tmp.getStart();
+                            n.setStart(startMin);
+                            int endMax = (tmp.getEnd() >= n.getEnd()) ? tmp.getEnd() : n.getEnd();
+                            n.setEnd(endMax);
+                            if (tmp.getAnomalyFactor() > n.getAnomalyFactor())
+                            {
+                                n.setAnomalyFactor(tmp.getAnomalyFactor());
+                            }
+                            banIndex.Add(j);
+                        }
+                        else if ((n.getStart() >= tmp.getStart() && n.getStart() <= tmp.getEnd())
+                                || (n.getStart() == tmp.getEnd() + 1))
+                        {
+                            int startMin = (tmp.getStart() >= n.getStart()) ? n.getStart() : tmp.getStart();
+                            n.setStart(startMin);
+                            int endMax = (tmp.getEnd() >= n.getEnd()) ? tmp.getEnd() : n.getEnd();
+                            n.setEnd(endMax);
                             if (tmp.getAnomalyFactor() > n.getAnomalyFactor())
                             {
                                 n.setAnomalyFactor(tmp.getAnomalyFactor());
