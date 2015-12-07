@@ -53,6 +53,7 @@
     <Compile Include="common\AnomalFactorCalculator.cs" />
     <Compile Include="common\DTWDistance.cs" />
     <Compile Include="common\ExtreamePointSegmentation.cs" />
+    <Compile Include="common\ParallelAlgorithms_Wavefront.cs" />
     <Compile Include="common\QuadraticRegression.cs" />
     <Compile Include="common\QuadraticSegmentation.cs" />
     <Compile Include="common\Distance.cs" />
