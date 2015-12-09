@@ -230,9 +230,9 @@ namespace AlomalyTimeSeriesDetector
                 }
                 NSubsequence n = new NSubsequence(candidates[i].getStart(), candidates[i].getEnd());
                 n.setAnomalyFactor(candidates[i].getAnomalyFactor());
-                for (int j = i + 1; j < size; j++)
+                for (int j = 0; j < size; j++)
                 {
-                    if (!banIndex.Contains(j))
+                    if (!banIndex.Contains(j) && i != j)
                     {
                         NSubsequence tmp = candidates[j];
                         if ((tmp.getStart() >= n.getStart() && tmp.getStart() <= n.getEnd())
@@ -263,8 +263,14 @@ namespace AlomalyTimeSeriesDetector
                         }
                     }
                 }
-                ret.Add(n);
                 candidates[i] = n;// reset
+            }
+            for (int i = 0; i < size; i++) 
+            {
+                if (!banIndex.Contains(i))
+                {
+                    ret.Add(candidates[i]);
+                }
             }
             this.println("FINISH MERGE...");
             return ret;
