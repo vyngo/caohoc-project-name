@@ -92,7 +92,7 @@ namespace AlomalyTimeSeriesDetector.common
             while (globalIndex < originalData.Length)
             {
                 iMax = FindMaximum();
-                if (iMax > 0 & ((iMax - MINIMUM_LENGTH) > iMin))
+                if (iMax > 0 && ((iMax - MINIMUM_LENGTH) > iMin))
                     extremePoint.Add(iMax);
                 iMin = FindMinimum();
 

@@ -17,13 +17,13 @@ namespace AlomalyTimeSeriesDetector
         NTimeSeries series;
         List<NSubsequence> anomalies;
         List<NSubsequence> segments;
-        public TimeSeriesPlot( NTimeSeries series)
+        public TimeSeriesPlot(NTimeSeries series)
         {
             this.series = series;
             InitializeComponent();
         }
 
-        public TimeSeriesPlot(NTimeSeries series, List<NSubsequence> anomalies) 
+        public TimeSeriesPlot(NTimeSeries series, List<NSubsequence> anomalies)
         {
             this.series = series;
             this.anomalies = anomalies;
@@ -58,16 +58,18 @@ namespace AlomalyTimeSeriesDetector
             myPane.XAxis.Scale.MagAuto = false;
 
             timeSeriesChart.AxisChange();
-           
-            if(this.anomalies != null && this.anomalies.Count > 0){
+
+            if (this.anomalies != null && this.anomalies.Count > 0)
+            {
                 bool first = true;
                 bool afirst = true;
-                
-                foreach (NSubsequence sub in this.anomalies) 
+
+                foreach (NSubsequence sub in this.anomalies)
                 {
                     List<double> anomalIndex = new List<double>();
                     List<double> anomalValue = new List<double>();
-                    for (int i = sub.getStart(); i <= sub.getEnd(); i++) {
+                    for (int i = sub.getStart(); i <= sub.getEnd(); i++)
+                    {
                         anomalIndex.Add(i);
                         anomalValue.Add(data[i]);
                     }
@@ -83,13 +85,13 @@ namespace AlomalyTimeSeriesDetector
                         myPane.AddCurve("", anomalList, Color.Red, SymbolType.None);
                     }
                 }
-               
+
                 int j = 0;
                 List<double> index = new List<double>();
                 List<double> value = new List<double>();
                 while (j < size)
                 {
-                    
+
                     NSubsequence tmp = isInAnormalSeries(j);
                     if (tmp == null)
                     {
@@ -99,13 +101,14 @@ namespace AlomalyTimeSeriesDetector
                     }
                     else
                     {
-                        if (index.Count > 0 && value.Count > 0) {
+                        if (index.Count > 0 && value.Count > 0)
+                        {
                             PointPairList normalList = new PointPairList();
                             normalList.Add(index.ToArray(), value.ToArray());
                             if (first)
                             {
                                 myPane.AddCurve("series", normalList, Color.Blue, SymbolType.None);
-                                afirst = false;
+                                first = false;
                             }
                             else
                             {
@@ -118,13 +121,14 @@ namespace AlomalyTimeSeriesDetector
                         j += tmp.getEnd() - tmp.getStart() + 1;// jump out of anormal subsequence
                     }
                 }
-                if (index.Count > 0 && value.Count > 0) {// print tail
+                if (index.Count > 0 && value.Count > 0)
+                {// print tail
                     PointPairList normalList = new PointPairList();
                     normalList.Add(index.ToArray(), value.ToArray());
                     if (first)
                     {
                         myPane.AddCurve("series", normalList, Color.Blue, SymbolType.None);
-                        afirst = false;
+                        first = false;
                     }
                     else
                     {
@@ -133,7 +137,9 @@ namespace AlomalyTimeSeriesDetector
                     index.Clear();
                     value.Clear();
                 }
-            }else if(this.segments != null && this.segments.Count > 0){
+            }
+            else if (this.segments != null && this.segments.Count > 0)
+            {
                 bool afirst = true;
                 int c = 0;
                 List<Color> colors = new List<Color>();
@@ -164,7 +170,9 @@ namespace AlomalyTimeSeriesDetector
                     }
                     c++;
                 }
-            }else{
+            }
+            else
+            {
                 List<double> index = new List<double>();
                 List<double> value = new List<double>();
                 for (int i = 0; i < size; i++)
@@ -177,12 +185,13 @@ namespace AlomalyTimeSeriesDetector
                 myPane.AddCurve("series", list, Color.Blue, SymbolType.None);
 
             }
-            
+
             timeSeriesChart.AxisChange();
             timeSeriesChart.Invalidate();
         }
 
-        private NSubsequence isInAnormalSeries(int i) {
+        private NSubsequence isInAnormalSeries(int i)
+        {
             foreach (NSubsequence sub in this.anomalies)
             {
                 if (sub.getStart() <= i && sub.getEnd() >= i)

@@ -264,6 +264,7 @@ namespace AlomalyTimeSeriesDetector
                     }
                 }
                 ret.Add(n);
+                candidates[i] = n;// reset
             }
             this.println("FINISH MERGE...");
             return ret;
