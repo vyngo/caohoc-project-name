@@ -8,19 +8,19 @@ namespace AlomalyTimeSeriesDetector.common
 {
     class DTWDistance
     {
-        public double Distance(double[] t1, double[] t2)
+        public static double Distance(double[] t1, double[] t2)
         {
-                return Dtw(t1, t2);
-                //ParallelDTW(t1, t2);
+                //return Dtw(t1, t2);
+                return ParallelDTW(t1, t2);
             
         }
         
-        public double Dtw(double[] t1, double[] t2)
+        private static double Dtw(double[] t1, double[] t2)
         {
             return SimpleDtw(t1, t2);
         }
 
-        private double SimpleDtw(double[] _x, double[] _y)
+        private static double SimpleDtw(double[] _x, double[] _y)
         {
             double v;
             double[,] f = new double[_x.Length, _y.Length];
@@ -89,14 +89,14 @@ namespace AlomalyTimeSeriesDetector.common
 
         //speed up DTW
 
-        private double getEuclid(double[] _x, int indx1, double[] _y, int indx2)
+        private static double getEuclid(double[] _x, int indx1, double[] _y, int indx2)
         {
             double result = 0;
             result = (_x[indx1] - _y[indx2]) * (_x[indx1] - _y[indx2]);
             return result;
         }
 
-        private double ParallelDTW(double[] s1, double[] s2)
+        private static double ParallelDTW(double[] s1, double[] s2)
         {
             double[,] dist = new double[s1.Length, s2.Length];
             int numBlocks = Environment.ProcessorCount * 4;
@@ -135,7 +135,7 @@ namespace AlomalyTimeSeriesDetector.common
         }
     }
 
-    public struct Pos
+    struct Pos
     {
         public int x; // time series x
         public int y; // time series y

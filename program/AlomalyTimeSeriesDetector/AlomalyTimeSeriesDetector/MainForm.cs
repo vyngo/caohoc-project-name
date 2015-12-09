@@ -67,5 +67,11 @@ namespace AlomalyTimeSeriesDetector
             ExtreamPointForm form = new ExtreamPointForm();
             form.Show();
         }
+
+        private void variableLengthWithWDTToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            VLWDT form = new VLWDT();
+            form.Show();
+        }
     }
 }

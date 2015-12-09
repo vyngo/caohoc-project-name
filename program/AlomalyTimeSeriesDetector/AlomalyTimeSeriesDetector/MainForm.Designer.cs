@@ -35,10 +35,11 @@
             this.sWABToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quadraticToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.variableLengthMethodToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.extreamPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.extreamPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.variableLengthWithWDTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,7 +61,8 @@
             this.sWABToolStripMenuItem,
             this.quadraticToolStripMenuItem,
             this.variableLengthMethodToolStripMenuItem,
-            this.extreamPointToolStripMenuItem});
+            this.extreamPointToolStripMenuItem,
+            this.variableLengthWithWDTToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -68,37 +70,44 @@
             // loadDataToolStripMenuItem
             // 
             this.loadDataToolStripMenuItem.Name = "loadDataToolStripMenuItem";
-            this.loadDataToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.loadDataToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.loadDataToolStripMenuItem.Text = "Load Data";
             this.loadDataToolStripMenuItem.Click += new System.EventHandler(this.loadDataToolStripMenuItem_Click);
             // 
             // hotSaxToolStripMenuItem
             // 
             this.hotSaxToolStripMenuItem.Name = "hotSaxToolStripMenuItem";
-            this.hotSaxToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.hotSaxToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.hotSaxToolStripMenuItem.Text = "Hot Sax";
             this.hotSaxToolStripMenuItem.Click += new System.EventHandler(this.hotSaxToolStripMenuItem_Click);
             // 
             // sWABToolStripMenuItem
             // 
             this.sWABToolStripMenuItem.Name = "sWABToolStripMenuItem";
-            this.sWABToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.sWABToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.sWABToolStripMenuItem.Text = "SWAB";
             this.sWABToolStripMenuItem.Click += new System.EventHandler(this.sWABToolStripMenuItem_Click);
             // 
             // quadraticToolStripMenuItem
             // 
             this.quadraticToolStripMenuItem.Name = "quadraticToolStripMenuItem";
-            this.quadraticToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.quadraticToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.quadraticToolStripMenuItem.Text = "Quadratic";
             this.quadraticToolStripMenuItem.Click += new System.EventHandler(this.quadraticToolStripMenuItem_Click);
             // 
             // variableLengthMethodToolStripMenuItem
             // 
             this.variableLengthMethodToolStripMenuItem.Name = "variableLengthMethodToolStripMenuItem";
-            this.variableLengthMethodToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.variableLengthMethodToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.variableLengthMethodToolStripMenuItem.Text = "Variable Length Method";
             this.variableLengthMethodToolStripMenuItem.Click += new System.EventHandler(this.variableLengthMethodToolStripMenuItem_Click);
+            // 
+            // extreamPointToolStripMenuItem
+            // 
+            this.extreamPointToolStripMenuItem.Name = "extreamPointToolStripMenuItem";
+            this.extreamPointToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.extreamPointToolStripMenuItem.Text = "Extream Point";
+            this.extreamPointToolStripMenuItem.Click += new System.EventHandler(this.extreamPointToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 
@@ -123,12 +132,12 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "2015 - 2016";
             // 
-            // extreamPointToolStripMenuItem
+            // variableLengthWithWDTToolStripMenuItem
             // 
-            this.extreamPointToolStripMenuItem.Name = "extreamPointToolStripMenuItem";
-            this.extreamPointToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.extreamPointToolStripMenuItem.Text = "Extream Point";
-            this.extreamPointToolStripMenuItem.Click += new System.EventHandler(this.extreamPointToolStripMenuItem_Click);
+            this.variableLengthWithWDTToolStripMenuItem.Name = "variableLengthWithWDTToolStripMenuItem";
+            this.variableLengthWithWDTToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.variableLengthWithWDTToolStripMenuItem.Text = "Variable Length With WDT";
+            this.variableLengthWithWDTToolStripMenuItem.Click += new System.EventHandler(this.variableLengthWithWDTToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -165,6 +174,7 @@
         private System.Windows.Forms.ToolStripMenuItem quadraticToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem variableLengthMethodToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem extreamPointToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem variableLengthWithWDTToolStripMenuItem;
     }
 }
 

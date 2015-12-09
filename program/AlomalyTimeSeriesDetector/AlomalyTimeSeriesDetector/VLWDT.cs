@@ -97,5 +97,41 @@ namespace AlomalyTimeSeriesDetector
             TimeSeriesPlot plot = new TimeSeriesPlot(tmp, this.anomalies);
             plot.Show();
         }
+
+        private void run_button_Click(object sender, EventArgs e)
+        {
+            double[] d1 = new double[350];
+            double[] d2 = new double[400];
+            double[] d3 = new double[350];
+            double[] d4 = new double[400];
+            int index = 0;
+            for (int i = 0; i < d1.Length; i++) 
+            {
+                d1[i] = this.series.getData()[index];
+                index++;
+            }
+            for (int i = 0; i < d2.Length; i++)
+            {
+                d2[i] = this.series.getData()[index];
+                index++;
+            }
+            for (int i = 0; i < d3.Length; i++)
+            {
+                d3[i] = this.series.getData()[index];
+                index++;
+            }
+            for (int i = 0; i < d4.Length; i++)
+            {
+                d4[i] = this.series.getData()[index];
+                index++;
+            }
+            double dis12 = DTWDistance.Distance(d1, d2);
+            double dis21 = DTWDistance.Distance(d2, d1);
+            this.println("Dist12: " + dis12 + " vs " + Distance.distance(d1, d2));
+            this.println("Dist21: " + dis21 + " vs " + Distance.distance(d2, d1));
+
+            this.println("Dist34: " + DTWDistance.Distance(d3, d4) + " vs " + Distance.distance(d3, d4));
+            this.println("Dist43: " + DTWDistance.Distance(d4, d3) + " vs " + Distance.distance(d4, d3));
+        }
     }
 }
