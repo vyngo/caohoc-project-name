@@ -35,7 +35,7 @@
             this.k_label = new System.Windows.Forms.Label();
             this.k_textBox = new System.Windows.Forms.TextBox();
             this.alpha_label = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.alpha_textBox = new System.Windows.Forms.TextBox();
             this.loadData_button = new System.Windows.Forms.Button();
             this.run_button = new System.Windows.Forms.Button();
             this.plot_button = new System.Windows.Forms.Button();
@@ -43,6 +43,8 @@
             this.result_richTextBox = new System.Windows.Forms.RichTextBox();
             this.result_label = new System.Windows.Forms.Label();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.e2_label = new System.Windows.Forms.Label();
+            this.e2_textBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // numDataPoints_label
@@ -102,12 +104,12 @@
             this.alpha_label.TabIndex = 6;
             this.alpha_label.Text = "Anomaly Threshold";
             // 
-            // textBox1
+            // alpha_textBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(750, 35);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 7;
+            this.alpha_textBox.Location = new System.Drawing.Point(750, 35);
+            this.alpha_textBox.Name = "alpha_textBox";
+            this.alpha_textBox.Size = new System.Drawing.Size(100, 20);
+            this.alpha_textBox.TabIndex = 7;
             // 
             // loadData_button
             // 
@@ -170,18 +172,36 @@
             // 
             this.openFileDialog.FileName = "openFileDialog";
             // 
+            // e2_label
+            // 
+            this.e2_label.AutoSize = true;
+            this.e2_label.Location = new System.Drawing.Point(210, 69);
+            this.e2_label.Name = "e2_label";
+            this.e2_label.Size = new System.Drawing.Size(132, 13);
+            this.e2_label.TabIndex = 14;
+            this.e2_label.Text = "Non-Seft Match Threshold";
+            // 
+            // e2_textBox
+            // 
+            this.e2_textBox.Location = new System.Drawing.Point(348, 66);
+            this.e2_textBox.Name = "e2_textBox";
+            this.e2_textBox.Size = new System.Drawing.Size(100, 20);
+            this.e2_textBox.TabIndex = 15;
+            // 
             // VLWDT
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(863, 519);
+            this.Controls.Add(this.e2_textBox);
+            this.Controls.Add(this.e2_label);
             this.Controls.Add(this.result_label);
             this.Controls.Add(this.result_richTextBox);
             this.Controls.Add(this.log_richTextBox);
             this.Controls.Add(this.plot_button);
             this.Controls.Add(this.run_button);
             this.Controls.Add(this.loadData_button);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.alpha_textBox);
             this.Controls.Add(this.alpha_label);
             this.Controls.Add(this.k_textBox);
             this.Controls.Add(this.k_label);
@@ -207,7 +227,7 @@
         private System.Windows.Forms.Label k_label;
         private System.Windows.Forms.TextBox k_textBox;
         private System.Windows.Forms.Label alpha_label;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox alpha_textBox;
         private System.Windows.Forms.Button loadData_button;
         private System.Windows.Forms.Button run_button;
         private System.Windows.Forms.Button plot_button;
@@ -215,5 +235,7 @@
         private System.Windows.Forms.RichTextBox result_richTextBox;
         private System.Windows.Forms.Label result_label;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.Label e2_label;
+        private System.Windows.Forms.TextBox e2_textBox;
     }
 }
