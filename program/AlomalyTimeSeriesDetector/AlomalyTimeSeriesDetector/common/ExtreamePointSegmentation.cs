@@ -43,7 +43,11 @@ namespace AlomalyTimeSeriesDetector.common
             }
             List<int> indexs = ExtractExtremePoint();
             if (indexs.IndexOf(0) < 0) {
-                indexs.Insert(0, 0);
+                //int length = indexs[0] - 0 + 1;
+                //if (length >= MINIMUM_LENGTH)
+                //{
+                    indexs.Insert(0, 0);
+                //}
             }
             if (indexs.IndexOf(this.originalData.Length - 1) < 0) {
                 indexs.Add(this.originalData.Length - 1);
