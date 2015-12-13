@@ -113,7 +113,7 @@ public class DistanceCal {
             File file = new File(fileData);
             scanner = new Scanner(file);
             int i = 0;
-            while (scanner.hasNextLine() && series.getData().size() < 10000) {
+            while (scanner.hasNextLine()) {
                 i++;
                 String draw = scanner.nextLine();
                 String line = draw.trim();
