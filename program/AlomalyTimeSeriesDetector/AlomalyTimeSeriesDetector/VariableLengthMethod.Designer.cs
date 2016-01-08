@@ -47,6 +47,8 @@
             this.varlength_log_richTextBox = new System.Windows.Forms.RichTextBox();
             this.varlength_result_richTextBox = new System.Windows.Forms.RichTextBox();
             this.varlength_result_label = new System.Windows.Forms.Label();
+            this.delta_label = new System.Windows.Forms.Label();
+            this.delta_textBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // varlength_numDataPoint_label
@@ -100,7 +102,7 @@
             // varlength_k_label
             // 
             this.varlength_k_label.AutoSize = true;
-            this.varlength_k_label.Location = new System.Drawing.Point(389, 82);
+            this.varlength_k_label.Location = new System.Drawing.Point(330, 85);
             this.varlength_k_label.Name = "varlength_k_label";
             this.varlength_k_label.Size = new System.Drawing.Size(14, 13);
             this.varlength_k_label.TabIndex = 6;
@@ -108,7 +110,7 @@
             // 
             // varlength_k_textBox
             // 
-            this.varlength_k_textBox.Location = new System.Drawing.Point(421, 75);
+            this.varlength_k_textBox.Location = new System.Drawing.Point(361, 82);
             this.varlength_k_textBox.Name = "varlength_k_textBox";
             this.varlength_k_textBox.Size = new System.Drawing.Size(100, 20);
             this.varlength_k_textBox.TabIndex = 7;
@@ -116,7 +118,7 @@
             // varlength_alpha_label
             // 
             this.varlength_alpha_label.AutoSize = true;
-            this.varlength_alpha_label.Location = new System.Drawing.Point(609, 78);
+            this.varlength_alpha_label.Location = new System.Drawing.Point(481, 85);
             this.varlength_alpha_label.Name = "varlength_alpha_label";
             this.varlength_alpha_label.Size = new System.Drawing.Size(95, 13);
             this.varlength_alpha_label.TabIndex = 8;
@@ -124,7 +126,7 @@
             // 
             // varlength_alpha_textBox
             // 
-            this.varlength_alpha_textBox.Location = new System.Drawing.Point(720, 75);
+            this.varlength_alpha_textBox.Location = new System.Drawing.Point(582, 82);
             this.varlength_alpha_textBox.Name = "varlength_alpha_textBox";
             this.varlength_alpha_textBox.Size = new System.Drawing.Size(100, 20);
             this.varlength_alpha_textBox.TabIndex = 9;
@@ -211,11 +213,29 @@
             this.varlength_result_label.TabIndex = 17;
             this.varlength_result_label.Text = "Result";
             // 
+            // delta_label
+            // 
+            this.delta_label.AutoSize = true;
+            this.delta_label.Location = new System.Drawing.Point(705, 85);
+            this.delta_label.Name = "delta_label";
+            this.delta_label.Size = new System.Drawing.Size(32, 13);
+            this.delta_label.TabIndex = 18;
+            this.delta_label.Text = "Delta";
+            // 
+            // delta_textBox
+            // 
+            this.delta_textBox.Location = new System.Drawing.Point(743, 82);
+            this.delta_textBox.Name = "delta_textBox";
+            this.delta_textBox.Size = new System.Drawing.Size(100, 20);
+            this.delta_textBox.TabIndex = 19;
+            // 
             // VariableLengthMethod
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(861, 500);
+            this.Controls.Add(this.delta_textBox);
+            this.Controls.Add(this.delta_label);
             this.Controls.Add(this.varlength_result_label);
             this.Controls.Add(this.varlength_result_richTextBox);
             this.Controls.Add(this.varlength_log_richTextBox);
@@ -264,5 +284,7 @@
         private System.Windows.Forms.RichTextBox varlength_log_richTextBox;
         private System.Windows.Forms.RichTextBox varlength_result_richTextBox;
         private System.Windows.Forms.Label varlength_result_label;
+        private System.Windows.Forms.Label delta_label;
+        private System.Windows.Forms.TextBox delta_textBox;
     }
 }

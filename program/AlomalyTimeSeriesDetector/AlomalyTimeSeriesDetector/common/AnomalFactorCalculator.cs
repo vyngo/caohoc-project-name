@@ -18,7 +18,7 @@ namespace AlomalyTimeSeriesDetector.common
             this.log = log;
             this.series = series;
         }
-        public List<NSubsequence> anomalFactorCal(List<NSubsequence> candidates, int k)
+        public List<NSubsequence> anomalFactorCal(List<NSubsequence> candidates, int k, int delta)
         {
             this.println("ANOMAL FACTOR CALCULATE...");
             if (candidates != null && candidates.Count > 0)
@@ -38,6 +38,12 @@ namespace AlomalyTimeSeriesDetector.common
                     }
                 }
                 int size = candidates.Count;
+                if (delta > 0 && delta < 100) {
+                    int sum = lmin + lmax;
+                    int meanLength = (sum % 2 == 0)? (sum / 2) : ((sum / 2) + 1);
+                    lmin = meanLength - ((delta * meanLength) / 100);
+                    lmax = meanLength + ((delta * meanLength) / 100);
+                }
                 double[,] distanceMatrix = distanceMatrixCal(candidates, lmin, lmax);
 
                 List<double> kDis = new List<double>();

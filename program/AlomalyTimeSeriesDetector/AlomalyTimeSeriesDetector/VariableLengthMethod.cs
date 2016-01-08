@@ -169,8 +169,12 @@ namespace AlomalyTimeSeriesDetector
             {
                 k = Convert.ToInt32(Math.Ceiling(0.05 * candiadates.Count));
             }
+            int delta = -1;
+            if (!String.IsNullOrEmpty(this.delta_textBox.Text)) {
+                delta = int.Parse(this.delta_textBox.Text);
+            }
             AnomalFactorCalculator anomalCal = new AnomalFactorCalculator(tmp, this.varlength_log_richTextBox);
-            candiadates = anomalCal.anomalFactorCal(candiadates, k);
+            candiadates = anomalCal.anomalFactorCal(candiadates, k, delta);
             stCal.Stop();
             this.writeResult("Time execute calculate anomal factor: " + stCal.Elapsed.ToString());
             double a = 3.0;
