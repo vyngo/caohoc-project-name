@@ -25,6 +25,7 @@ namespace AlomalyTimeSeriesDetector.common
             {
                 int lmax = int.MinValue;
                 int lmin = int.MaxValue;
+                int sum = 0;
                 foreach (NSubsequence seq in candidates)
                 {
                     int length = seq.getLength();
@@ -36,11 +37,11 @@ namespace AlomalyTimeSeriesDetector.common
                     {
                         lmin = length;
                     }
+                    sum += length;
                 }
                 int size = candidates.Count;
                 if (delta > 0 && delta < 100) {
-                    int sum = lmin + lmax;
-                    int meanLength = (sum % 2 == 0)? (sum / 2) : ((sum / 2) + 1);
+                    int meanLength = (sum % size == 0)? (sum / size) : ((sum / size) + 1);
                     lmin = meanLength - ((delta * meanLength) / 100);
                     lmax = meanLength + ((delta * meanLength) / 100);
                 }
