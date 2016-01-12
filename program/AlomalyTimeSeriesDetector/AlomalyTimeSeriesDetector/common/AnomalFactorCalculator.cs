@@ -42,8 +42,16 @@ namespace AlomalyTimeSeriesDetector.common
                 int size = candidates.Count;
                 if (delta > 0 && delta < 100) {
                     int meanLength = (sum % size == 0)? (sum / size) : ((sum / size) + 1);
-                    lmin = meanLength - ((delta * meanLength) / 100);
-                    lmax = meanLength + ((delta * meanLength) / 100);
+                    int temp = meanLength - ((delta * meanLength) / 100);
+                    if (temp > lmin)
+                    {
+                        lmin = temp;
+                    }
+                    temp = meanLength + ((delta * meanLength) / 100);
+                    if (temp < lmax)
+                    {
+                        lmax = temp;
+                    }
                 }
                 double[,] distanceMatrix = distanceMatrixCal(candidates, lmin, lmax);
 
