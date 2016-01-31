@@ -67,6 +67,12 @@
     <Compile Include="common\Utils.cs" />
     <Compile Include="entity\NSubsequence.cs" />
     <Compile Include="entity\NTimeSeries.cs" />
+    <Compile Include="EstimateRForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EstimateRForm.Designer.cs">
+      <DependentUpon>EstimateRForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ExtreamPointForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +123,9 @@
     <Compile Include="VLWDT.Designer.cs">
       <DependentUpon>VLWDT.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="EstimateRForm.resx">
+      <DependentUpon>EstimateRForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ExtreamPointForm.resx">
       <DependentUpon>ExtreamPointForm.cs</DependentUpon>
     </EmbeddedResource>

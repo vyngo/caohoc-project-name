@@ -60,6 +60,30 @@ namespace AlomalyTimeSeriesDetector.common
             return ret;
         }
 
+        public List<int> ExtracExtremePointNoMinLength(NTimeSeries series, double ratio) 
+        {
+            clearBox();
+            List<NSubsequence> ret = new List<NSubsequence>();
+            this.RatioOfExtremePoint = ratio;
+            this.MINIMUM_LENGTH = 0;
+            this.globalIndex = 0;
+            double[] tmp = series.getData().ToArray();
+            double min = Utils.min(tmp);
+            if (min < 0)
+            {
+                this.originalData = new double[tmp.Length];
+                for (int i = 0; i < tmp.Length; i++)
+                {
+                    this.originalData[i] = tmp[i] + (-min) + 1; // scale along y to get positive value;
+                }
+            }
+            else
+            {
+                this.originalData = series.getData().ToArray();
+            }
+            return ExtractExtremePoint();
+        }
+
         private List<int> ExtractExtremePoint()
         {
             // start FindFistTwo();
