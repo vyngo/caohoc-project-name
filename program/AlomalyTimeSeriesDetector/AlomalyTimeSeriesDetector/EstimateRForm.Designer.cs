@@ -96,6 +96,7 @@
             this.run_button.TabIndex = 6;
             this.run_button.Text = "Run";
             this.run_button.UseVisualStyleBackColor = true;
+            this.run_button.Click += new System.EventHandler(this.run_button_Click);
             // 
             // choose_openFileDialog
             // 

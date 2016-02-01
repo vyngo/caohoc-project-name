@@ -36,10 +36,11 @@
             this.quadraticToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.variableLengthMethodToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extreamPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.variableLengthWithWDTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.variableLengthWithWDTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.estimateRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,7 +63,8 @@
             this.quadraticToolStripMenuItem,
             this.variableLengthMethodToolStripMenuItem,
             this.extreamPointToolStripMenuItem,
-            this.variableLengthWithWDTToolStripMenuItem});
+            this.variableLengthWithWDTToolStripMenuItem,
+            this.estimateRToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -109,6 +111,13 @@
             this.extreamPointToolStripMenuItem.Text = "Extream Point";
             this.extreamPointToolStripMenuItem.Click += new System.EventHandler(this.extreamPointToolStripMenuItem_Click);
             // 
+            // variableLengthWithWDTToolStripMenuItem
+            // 
+            this.variableLengthWithWDTToolStripMenuItem.Name = "variableLengthWithWDTToolStripMenuItem";
+            this.variableLengthWithWDTToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.variableLengthWithWDTToolStripMenuItem.Text = "Variable Length With WDT";
+            this.variableLengthWithWDTToolStripMenuItem.Click += new System.EventHandler(this.variableLengthWithWDTToolStripMenuItem_Click);
+            // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
@@ -132,12 +141,12 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "2015 - 2016";
             // 
-            // variableLengthWithWDTToolStripMenuItem
+            // estimateRToolStripMenuItem
             // 
-            this.variableLengthWithWDTToolStripMenuItem.Name = "variableLengthWithWDTToolStripMenuItem";
-            this.variableLengthWithWDTToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.variableLengthWithWDTToolStripMenuItem.Text = "Variable Length With WDT";
-            this.variableLengthWithWDTToolStripMenuItem.Click += new System.EventHandler(this.variableLengthWithWDTToolStripMenuItem_Click);
+            this.estimateRToolStripMenuItem.Name = "estimateRToolStripMenuItem";
+            this.estimateRToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.estimateRToolStripMenuItem.Text = "Estimate R";
+            this.estimateRToolStripMenuItem.Click += new System.EventHandler(this.estimateRToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -175,6 +184,7 @@
         private System.Windows.Forms.ToolStripMenuItem variableLengthMethodToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem extreamPointToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem variableLengthWithWDTToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem estimateRToolStripMenuItem;
     }
 }
 

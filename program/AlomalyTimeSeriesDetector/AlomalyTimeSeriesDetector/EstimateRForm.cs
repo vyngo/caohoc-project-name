@@ -66,5 +66,41 @@ namespace AlomalyTimeSeriesDetector
         {
             this.result_richTextBox.AppendText(msg + "\n");
         }
+
+        private void run_button_Click(object sender, EventArgs e)
+        {
+            NTimeSeries tmp = new NTimeSeries();
+            for (int i = 0; i < this.series.getData().Count; i++)
+            {
+                tmp.addData(this.series.getData()[i]);
+            }
+            if (String.IsNullOrEmpty(this.delta_textBox.Text))
+            {
+                MessageBox.Show(this, "Delta is required", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            double delta = double.Parse(this.delta_textBox.Text);
+            double[] arr = tmp.getData().ToArray();
+            double min = Utils.min(arr);
+            double max = Utils.max(arr);
+            double absoluteMax = Math.Abs(max);
+            double absoluteMin = Math.Abs(min);
+            double maxR = double.MaxValue;
+            double minR = 1.0;
+            if (max * min > 0) {
+                maxR = (absoluteMax > absoluteMin) ? absoluteMax / absoluteMin : absoluteMin / absoluteMax;
+            }
+            else if (max * min == 0)
+            {
+                maxR = (absoluteMax > 0) ? absoluteMax : absoluteMin;
+            }
+            else {
+                maxR = (absoluteMax > absoluteMin) ? ((absoluteMax + absoluteMin) / absoluteMin) : ((absoluteMax + absoluteMin) / absoluteMax);
+            }
+            maxR = Math.Round(maxR, 2);
+            writeResult("Range: " + minR + " - " + maxR);
+            //ExtreamePointSegmentation seg = new ExtreamePointSegmentation(this.result_richTextBox);
+            
+        }
     }
 }

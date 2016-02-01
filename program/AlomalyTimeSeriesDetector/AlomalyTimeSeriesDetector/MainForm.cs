@@ -73,5 +73,11 @@ namespace AlomalyTimeSeriesDetector
             VLWDT form = new VLWDT();
             form.Show();
         }
+
+        private void estimateRToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EstimateRForm form = new EstimateRForm();
+            form.Show();
+        }
     }
 }
