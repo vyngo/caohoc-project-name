@@ -62,7 +62,6 @@ namespace AlomalyTimeSeriesDetector.common
 
         public List<int> ExtracExtremePointNoMinLength(NTimeSeries series, double ratio) 
         {
-            clearBox();
             List<NSubsequence> ret = new List<NSubsequence>();
             this.RatioOfExtremePoint = ratio;
             this.MINIMUM_LENGTH = 0;

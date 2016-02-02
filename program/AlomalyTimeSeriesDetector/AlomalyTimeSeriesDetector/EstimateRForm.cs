@@ -99,8 +99,45 @@ namespace AlomalyTimeSeriesDetector
             }
             maxR = Math.Round(maxR, 2);
             writeResult("Range: " + minR + " - " + maxR);
-            //ExtreamePointSegmentation seg = new ExtreamePointSegmentation(this.result_richTextBox);
-            
+            double rEst = maxR;
+            while (rEst > minR) {
+                ExtreamePointSegmentation seg = new ExtreamePointSegmentation(this.result_richTextBox);
+                List<int> extreamPoints = seg.ExtracExtremePointNoMinLength(tmp, rEst);
+                rEst -= delta;
+                double RMSE = getRMSE(extreamPoints, arr);
+                writeResult(Math.Round(rEst,2) + " : " + RMSE);
+            }
+        }
+
+        private double getRMSE(List<int> extream, double[] arr) {
+            double ret = 0.0;
+            for (int i = 0; (i + 1) < extream.Count; i++) {
+                int x1 = extream[i];
+                double y1 = arr[x1];
+                int x2 = extream[i+1];
+                double y2 = arr[x2];
+                double[] line = getLine((double)x1, y1, (double)x2, y2);
+                for (int j = x1 + 1; j < x2; j++) {
+                    double se = getSquareError(line, (double)j, arr[j]);
+                    ret += se;
+                }
+            }
+            ret = Math.Sqrt(ret / ((double)arr.Length));
+            return ret;
+        }
+
+        private double[] getLine(double x1, double y1, double x2, double y2) {
+            double[] ret = new double[2];
+            double a = (y1 - y2) / (x1 - x2);
+            double b = y1 - (x1 * a);
+            ret[0] = a;
+            ret[1] = b;
+            return ret;
+        }
+
+        private double getSquareError(double[] line, double x, double y) {
+            double est = line[0] * x + line[1];
+            return (y - est) * (y - est);
         }
     }
 }
