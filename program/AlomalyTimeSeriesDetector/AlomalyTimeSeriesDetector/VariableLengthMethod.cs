@@ -173,7 +173,14 @@ namespace AlomalyTimeSeriesDetector
             if (!String.IsNullOrEmpty(this.delta_textBox.Text)) {
                 delta = int.Parse(this.delta_textBox.Text);
             }
-            AnomalFactorCalculator anomalCal = new AnomalFactorCalculator(tmp, this.varlength_log_richTextBox);
+            int meanLength = 0;
+            foreach(NSubsequence sbs in candiadates){
+                if (sbs != null && sbs.getLength() > 0) {
+                    meanLength += sbs.getLength();
+                }
+            }
+            meanLength = meanLength / candiadates.Count;
+            AnomalFactorCalculator anomalCal = new AnomalFactorCalculator(tmp, this.varlength_log_richTextBox, meanLength);
             candiadates = anomalCal.anomalFactorCal(candiadates, k, delta);
             stCal.Stop();
             this.writeResult("Time execute calculate anomal factor: " + stCal.Elapsed.ToString());

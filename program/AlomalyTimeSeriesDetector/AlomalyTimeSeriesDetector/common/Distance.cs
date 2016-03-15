@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+
 
 namespace AlomalyTimeSeriesDetector.common
 {
@@ -34,18 +36,25 @@ namespace AlomalyTimeSeriesDetector.common
             }
             else
             {
-                int medium = (a.Length + b.Length) / 2;
-                double[] tmpA = a;
-                double[] tmpB = b;
-                if (a.Length != medium) {
-                    tmpA = homothetic(a, medium);
-                }
-                if (b.Length != medium) {
-                    tmpB = homothetic(b, medium);
-                }
-                return euclid(tmpA, tmpB);
+                System.ArgumentException argEx = new System.ArgumentException("Euclid Distance can not be applied to series of diffrent length");
+                throw argEx;
             }
-            
+
+        }
+
+        public static double distance(double[] a, double[] b, int medium)
+        {
+            double[] tmpA = a;
+            double[] tmpB = b;
+            if (a.Length != medium)
+            {
+                tmpA = homothetic(a, medium);
+            }
+            if (b.Length != medium)
+            {
+                tmpB = homothetic(b, medium);
+            }
+            return euclid(tmpA, tmpB);
         }
 
         private static double euclid(double[] a, double[] b)
@@ -83,7 +92,7 @@ namespace AlomalyTimeSeriesDetector.common
                 if (round_x >= data.Length - 1)
                 {
                     y = -(x - round_x) * data[round_x - 1] + (-round_x + 1 + x) * data[round_x];
-                   
+
                 }
                 else
                 {

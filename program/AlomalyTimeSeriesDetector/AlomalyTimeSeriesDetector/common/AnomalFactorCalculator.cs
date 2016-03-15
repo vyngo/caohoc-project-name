@@ -12,11 +12,13 @@ namespace AlomalyTimeSeriesDetector.common
     {
         private RichTextBox log;
         private NTimeSeries series;
+        private int meanLength;
 
-        public AnomalFactorCalculator(NTimeSeries series, RichTextBox log)
+        public AnomalFactorCalculator(NTimeSeries series, RichTextBox log, int meanLength)
         {
             this.log = log;
             this.series = series;
+            this.meanLength = meanLength;
         }
         public List<NSubsequence> anomalFactorCal(List<NSubsequence> candidates, int k, int delta)
         {
@@ -145,7 +147,7 @@ namespace AlomalyTimeSeriesDetector.common
                 if (sj + l <= limit)
                 {
                     double[] b = getSegment(sj, sj + l - 1);
-                    double cal = Distance.distance(a, b);
+                    double cal = Distance.distance(a, b, this.meanLength);
                     if (cal < ret)
                     {
                         ret = cal;
