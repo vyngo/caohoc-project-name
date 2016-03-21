@@ -28,31 +28,36 @@ namespace AlomalyTimeSeriesDetector.common
         //    }
         //}
 
+        //public static double distance(double[] a, double[] b)
+        //{
+        //    if (a.Length == b.Length)
+        //    {
+        //        return euclid(a, b);
+        //    }
+        //    else
+        //    {
+        //        System.ArgumentException argEx = new System.ArgumentException("Euclid Distance can not be applied to series of diffrent length");
+        //        throw argEx;
+        //    }
+
+        //}
+
         public static double distance(double[] a, double[] b)
         {
             if (a.Length == b.Length)
             {
                 return euclid(a, b);
             }
-            else
-            {
-                System.ArgumentException argEx = new System.ArgumentException("Euclid Distance can not be applied to series of diffrent length");
-                throw argEx;
-            }
-
-        }
-
-        public static double distance(double[] a, double[] b, int medium)
-        {
             double[] tmpA = a;
             double[] tmpB = b;
-            if (a.Length != medium)
+            int mean = (a.Length + b.Length) / 2;
+            if (a.Length != mean)
             {
-                tmpA = homothetic(a, medium);
+                tmpA = homothetic(a, mean);
             }
-            if (b.Length != medium)
+            if (b.Length != mean)
             {
-                tmpB = homothetic(b, medium);
+                tmpB = homothetic(b, mean);
             }
             return euclid(tmpA, tmpB);
         }
